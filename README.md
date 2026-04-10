@@ -37,11 +37,19 @@ $$(M-m)\ddot{x} - ml\ddot{\theta}\cos(\theta)+ml\ddot{\theta}\cos(\theta)+ml\dot
 $$l\ddot{\theta}-g\sin(\theta)-\ddot{x}\cos(\theta)$$
 
 
-## Numerical integration
-Euler's method 
+## Numerical integration methods
+- Euler's method 
 
-$$y(t+1)\equiv y(t)+h\cdot f(t,y)$$ 
+$$y_{n+1} \ \equiv \ y_n + h \cdot f(t_n,y_n)$$ 
 
 $$h<<1$$
 
-Runge-Kutta
+- Runge-Kutta
+
+# Some relevant papers:
+
+Section IV: NMPC Applied to an Inverted Pendulum  for  [Nonlinear model predictive control of an inverted pendulum][https://ieeexplore.ieee.org/document/5160391]
+
+[Data-Based Control of Feedback Linearizable Systems][https://ieeexplore.ieee.org/document/10054127] includes application to the double inverted pendulum
+
+[Willems’ Fundamental Lemma for Nonlinear Systems With Koopman Linear Embedding][https://arxiv.org/pdf/2409.16389]
