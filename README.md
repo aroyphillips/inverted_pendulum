@@ -12,8 +12,11 @@ Repository to generate and evaluate data for inverted pendulum problem for data-
   - [ ] 3.2 Evaluate data and determine winners
 
 # Deadlines:
+
 4/10: Tasks 1 [x]
+
 4/13: Tasks 2 [ ]
+
 4/20: Evaluate responses [ ]
 
 
