@@ -20,6 +20,8 @@ Repository to generate and evaluate data for inverted pendulum problem for data-
 4/20: Evaluate responses [ ]
 
 
+# Division of responsibility:
+Oscar to implement Tasks 2 and let Dani and Roy know if there are any questions
 
 
 # Math background
