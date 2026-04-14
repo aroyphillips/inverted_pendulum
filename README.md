@@ -32,7 +32,7 @@ State variables: $x(t), \dot{x}(t), \theta(t), \ddot(\theta(t)$
 
 Equations:
 
-$$(M-m)\ddot{x} - ml\ddot{\theta}\cos(\theta)+ml\ddot{\theta}\cos(\theta)+ml\dot{\theta}^2\sin(\theta) = F$$
+$$(M-m)\ddot{x} - ml\ddot{\theta}\cos(\theta) + ml\dot{\theta}^2\sin(\theta) = F$$
 
 $$l\ddot{\theta}-g\sin(\theta)-\ddot{x}\cos(\theta)$$
 
