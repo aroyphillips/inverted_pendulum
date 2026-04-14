@@ -34,7 +34,7 @@ Equations:
 
 $$(M-m)\ddot{x} - ml\ddot{\theta}\cos(\theta) + ml\dot{\theta}^2\sin(\theta) = F$$
 
-$$l\ddot{\theta}-g\sin(\theta)-\ddot{x}\cos(\theta)$$
+$$l\ddot{\theta}-g\sin(\theta)-\ddot{x}\cos(\theta) = 0$$
 
 
 ## Numerical integration methods
