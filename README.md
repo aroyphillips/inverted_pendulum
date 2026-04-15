@@ -8,7 +8,7 @@ Repository to generate and evaluate data for inverted pendulum problem for data-
   - [ ] 2.1.2 Optionally introduce measurement noise into the system
   - [ ] 2.2 Verify dataset consists of physically valid systems, e.g. via conservation of energy
   - [ ] 2.3 Plot the timeseries for  $\{x, \dot{x}, \theta < \pi/6, \dot{\theta}\}$
-  - [ ] 3.1 Distribute data to students allowing
+  - [ ] 3.1 Distribute data to students allowing for 3 additional requests to probe the system; i.e. by submitting a sequence of forces and returning the system $\theta(t)$
   - [ ] 3.2 Evaluate data and determine winners
 
 # Deadlines:
