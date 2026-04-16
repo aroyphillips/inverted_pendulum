@@ -53,3 +53,27 @@ Section IV: NMPC Applied to an Inverted Pendulum  for  [Nonlinear model predicti
 [Data-Based Control of Feedback Linearizable Systems][https://ieeexplore.ieee.org/document/10054127] includes application to the double inverted pendulum
 
 [Willems’ Fundamental Lemma for Nonlinear Systems With Koopman Linear Embedding][https://arxiv.org/pdf/2409.16389]
+
+# Inverted Pendulum: Full Example Notebook
+
+This project is intended to be run from a single notebook:
+
+- `notebooks/full_example.ipynb`
+
+## Setup
+
+From the project root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Run
+
+Open and run all cells in:
+
+- `notebooks/full_example.ipynb`
+
+The notebook derives the initial state, generates the random-walk dataset, runs PE/readiness checks, evaluates a novel input, and produces plots/animation.

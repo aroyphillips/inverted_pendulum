@@ -1,0 +1,4 @@
+.venv
+artifacts
+src/__pycache__/
+

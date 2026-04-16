@@ -1,0 +1,15 @@
+{
+  "pe_order": 20,
+  "num_pe_pass": 500,
+  "first_pe_pass_index": 0,
+  "first_pe_pass_rank": 20,
+  "first_pe_pass_condition_number": 2818.5809811245035,
+  "readiness_checks": {
+    "shape_match": true,
+    "finite_states": true,
+    "finite_inputs": true,
+    "monotonic_time": true,
+    "uniform_sampling": true,
+    "nontrivial_input_variance": true
+  }
+}
