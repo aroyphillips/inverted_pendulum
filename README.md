@@ -1,5 +1,25 @@
 Repository to generate and evaluate data for inverted pendulum problem for data-driven control.
 
+4/16/2026 update:
+1. I've uploaded Inverted_Pendulum_Problem_(With_random_walk).ipynb, which could help you generate 100 random trajectories, including the input as well as the output, stored in the form:
+   ```python
+   traj = {
+       "t": t_local,
+       "u": F_local,
+       "y": y_local,
+       "x": y_local[0],
+       "x_dot": y_local[1],
+       "theta": y_local[2],
+       "theta_dot": y_local[3],
+       "y0": np.array(y0_local),
+       "theta0_deg": theta0_deg_local
+   }
+Please check random_walk_trajectories_100.npy in the repo for the output.
+
+2. I've uploaded Inverted_Pendulum_Problem_LQR.ipynb as a LQR solution to stabilize the system and I think it works. If you don't understand where the linearization matrix/Ricatti Equation etc. come from, please check math derivation page 1 and 2. Good luck!
+
+Oscar
+
 # To-dos:
   - [x] 1.1 Define system of equations relating $\theta_{t}$ to $\theta_{t+1}$ e.g. via $\ddot{\theta} = C \sin(\theta))$  and implement via code 
   - [x] 1.2 Define system of equations relating input force $F$ to pendulum $\theta$  and implement via code
