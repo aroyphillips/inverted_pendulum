@@ -5,6 +5,7 @@ from inputs import (
     ConstantInput,
     GaussianRandomWalkInput,
     ImpulseThenZeroInput,
+    PiecewiseConstantInput,
     PiecewiseLinearInput,
     ZeroInput,
 )
@@ -25,6 +26,7 @@ __all__ = [
     "ConstantInput",
     "GaussianRandomWalkInput",
     "ImpulseThenZeroInput",
+    "PiecewiseConstantInput",
     "PiecewiseLinearInput",
     "ZeroInput",
     "load_dataset_npz",

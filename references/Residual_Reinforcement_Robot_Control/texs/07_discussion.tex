@@ -1,0 +1,15 @@
+\section{Discussion and Future Work}\label{sec:discussion}
+
+In this paper we study the combination of conventional feedback control methods with deep RL. 
+We presented a control method that utilizes conventional feedback control along with RL to solve complicated manipulation tasks involving friction and contacts with unstable objects. 
+We believe this approach can accelerate learning of many tasks, especially those where the control problem can be solved in large part by prior knowledge but requires some model-free reasoning to solve perfectly.
+Our method extends conventional feedback control and allows us to automatically solve problems from data that would otherwise require human experts to design solutions for. 
+In this sense, our method is related to differentiable programming \cite{wang2018differentiablepogramming} or automated algorithm design \cite{Sunderhauf2018}. 
+Our results demonstrate that the combination of conventional feedback control and RL can circumvent the disadvantages of both and provide a sample efficient robot controller that can cope with contact dynamics.
+
+A limitation of our method is that it requires a carefully crafted vision setup to infer positions and angles in the real world. This requirement limits its application to novel scenes, and also limits the quality of the learned feedback controller if the hand-engineered vision system does not preserve important information for the feedback controller such as the precise location of edges. Similar to compensating for control bias, the learned controller could also compensate for perception noise and bias. Therefore, one interesting direction for future work is incorporating vision input end-to-end into the learning process.
+
+\section{Acknowledgements}
+
+We would like to thank Murtaza Dalal for contributions to the robot controller code we built upon, as well as Vitchyr Pong and Pulkit Agrawal for useful discussions about this work. 
+This work was supported by the Siemens Corporation, the Office of Naval Research under a Young Investigator Program Award, and Berkeley DeepDrive.

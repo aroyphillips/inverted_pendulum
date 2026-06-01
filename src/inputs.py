@@ -49,6 +49,29 @@ class PiecewiseLinearInput:
 
 
 @dataclass
+class PiecewiseConstantInput:
+    t_grid: np.ndarray
+    u_grid: np.ndarray
+
+    def __post_init__(self) -> None:
+        self.t_grid = np.asarray(self.t_grid, dtype=float)
+        self.u_grid = np.asarray(self.u_grid, dtype=float)
+        if self.t_grid.ndim != 1 or self.u_grid.ndim != 1:
+            raise ValueError("t_grid and u_grid must be 1D arrays")
+        if self.t_grid.size != self.u_grid.size:
+            raise ValueError("t_grid and u_grid must have the same length")
+        if self.t_grid.size < 2:
+            raise ValueError("t_grid must have at least 2 elements")
+        if np.any(np.diff(self.t_grid) <= 0.0):
+            raise ValueError("t_grid must be strictly increasing")
+
+    def __call__(self, t: float, y: np.ndarray) -> float:
+        idx = int(np.searchsorted(self.t_grid, float(t), side="right") - 1)
+        idx = int(np.clip(idx, 0, self.u_grid.size - 1))
+        return float(self.u_grid[idx])
+
+
+@dataclass
 class GaussianRandomWalkInput:
     t_end: float
     dt_force: float = 0.1

@@ -1,0 +1,158 @@
+% \section{Maximum Entropy Objective}
+\section{Infinite Horizon Discounted Maximum Entropy Objective}
+\label{app:infinite_horizon_objective}
+The exact definition of the discounted maximum entropy objective is complicated by the fact that, when using a discount factor for policy gradient methods, we typically do not discount the state distribution, only the rewards. In that sense, discounted policy gradients typically do not optimize the true discounted objective. Instead, they optimize average reward, with the discount serving to reduce variance, as discussed by \citet{thomas2014bias}. However, we can define the objective that \emph{is} optimized under a discount factor as
+\begin{align}
+J(\policy) = \sum_{t=0}^\infty \E{(\st,\at) \sim \rho_\policy}{ \sum_{l=t}^\infty \discount^{l-t} \E{\state_l\sim\pdyn,\action_l\sim\policy}{ \reward(\st,\at) + \alpha \ent(\policy(\voidarg|\st))|\st,\at}}.
+\end{align}
+This objective corresponds to maximizing the discounted expected reward and entropy for future states originating from every state-action tuple $(\st,\at)$ weighted by its probability $\rho_\pi$ under the current policy.
+%%SL.12.25: some discussion of where this comes from? else it is a bit abstract. TH: added.
+
+\section{Proofs}
+%%SL.12.25: need to state the lemma before proving it, else readers have to flip back to learner in the paper all the time. TH: OK
+
+\subsection{\autoref{lem:soft_policy_evaluation}}
+\label{app:lem_soft_policy_evaluation}
+
+
+
+\textbf{\autoref{lem:soft_policy_evaluation}} (Soft Policy Evaluation).\textit{
+Consider the soft Bellman backup operator $\mathcal{T}^\policy$ in \autoref{eq:soft_bellman_backup_op} and a mapping $Q^0: \sspace \times \aspace\rightarrow \reals$ with $|\aspace|<\infty$, and define $\Q^{k+1} = \mathcal{T}^\policy \Q^k$. Then the sequence $Q^k$ will converge to the soft Q-value of $\policy$ as $k\rightarrow \infty$.}
+\begin{proof}
+Define the entropy augmented reward as $\reward_\policy(\st, \at) \triangleq \reward(\st, \at)  + \E{\stp\sim\pdyn}{\entropy\left(\policy(\voidarg|\stp)\right)}$ and rewrite the update rule as 
+\begin{align}
+\Q(\st, \at) \leftarrow \reward_\policy(\st, \at) + \discount \E{\stp\sim\pdyn,\atp \sim \policy}{Q(\stp, \atp)}
+\end{align}
+and apply the standard convergence results for policy evaluation~\citep{sutton1998reinforcement}. The assumption $|\aspace|<\infty$ is required to guarantee that the entropy augmented reward is bounded.
+\end{proof}
+
+
+\subsection{\autoref{lem:policy_improvement}}
+\label{app:lem_policy_improvement}
+
+
+\textbf{\autoref{lem:policy_improvement}} (Soft Policy Improvement).\textit{
+Let $\policy_\mathrm{old} \in \Pi$ and let $\policy_\mathrm{new}$ be the optimizer of the minimization problem defined in \autoref{eq:constrainted_policy_fitting}. Then $\Q^{\policy_\mathrm{new}}(\st, \at) \geq \Q^{\policy_\mathrm{old}}(\st, \at)$ for all $(\st, \at) \in \sspace\times\aspace$ with $|\aspace|<\infty$.}
+\begin{proof}
+%We will drop the state and action arguments from the following derivation for improved readability. 
+Let $\policyold\in \Pi$ and let $\Q^\policyold$ and $\V^\policyold$ be the corresponding soft state-action value and soft state value, and let $\policynew$ be defined as 
+\begin{align}
+\policynew(\voidarg|\st) &= \arg \min_{\policy' \in \Pi}\kl{\policy'(\voidarg|\st)}{\exp\left(Q^\policyold(\st,\voidarg) - \log Z^\policyold(\st)\right)}\notag\\
+ &= \arg\min_{\policy'\in\Pi}J_\policyold(\policy'(\voidarg|\st)).
+\end{align}
+It must be the case that $J_\policyold(\policynew(\voidarg|\st)) \leq J_\policyold(\policyold(\voidarg|\st))$, since we can always choose $\policynew = \policyold\in\Pi$. Hence
+\begin{align}
+\resizebox{1\textwidth}{!}{$
+\E{\at\sim\policynew}{\log \policynew(\at|\st) - Q^\policyold(\st, \at) + \log Z^\policyold(\st)}
+\leq \E{\at\sim\policyold}{\log \policyold(\at|\st) - Q^\policyold(\st,\at) + \log Z^\policyold(\st)}$},
+\end{align}
+and since partition function $Z^\policyold$ depends only on the state, the inequality reduces to
+\begin{align}
+\E{\at\sim\policynew}{Q^\policyold(\st, \at) - \log \policynew(\at|\st)} \geq V^\policyold(\st).
+\label{eq:soft_value_bound}
+\end{align}
+Next, consider the soft Bellman equation:
+\begin{align}
+Q^\policyold(\st, \at) &= \reward(\st, \at) + \discount\E{\stp\sim\pdyn}{V^\policyold(\stp)}\notag\\
+&\leq \reward(\st, \at) + \discount\E{\stp\sim\pdyn}{\E{\atp\sim\policynew}{Q^\policyold(\stp, \atp) - \log \policynew(\atp|\stp)}}\notag\\
+&\ \  \vdots\notag\\
+& \leq Q^\policynew(\st, \at),
+\end{align}
+where we have repeatedly expanded $Q^\policyold$ on the RHS by applying the soft Bellman equation and the bound in \autoref{eq:soft_value_bound}. Convergence to $\Q^\policynew$ follows from \autoref{lem:soft_policy_evaluation}.
+\end{proof}
+
+
+\subsection{\autoref{the:soft_policy_iteration}}
+\label{app:the_soft_policy_iteration}
+
+
+
+
+
+
+
+\textbf{\autoref{the:soft_policy_iteration}} (Soft Policy Iteration). \textit{
+Repeated application of soft policy evaluation and soft policy improvement to any $\policy\in\Pi$ converges to a policy $\policy\opt$ such that $Q^{\policy\opt}(\st, \at) \geq Q^{\policy}(\st, \at)$ for all $\policy \in \Pi$ and $(\st, \at) \in \sspace\times\aspace$, assuming $|\aspace|<\infty$.}
+\begin{proof}
+Let $\policy_i$ be the policy at iteration $i$. By \autoref{lem:policy_improvement}, the sequence $Q^{\policy_i}$ is monotonically increasing. Since $Q^\policy$ is bounded above for $\policy \in \Pi$ (both the reward and entropy are bounded), the sequence converges to some $\policy\opt$. We will still need to show that $\policy\opt$ is indeed optimal. At convergence, it must be case that $J_\policyopt(\policyopt(\voidarg|\st)) < J_\policyopt(\policy(\voidarg|\st))$ for all $\policy\in\Pi$, $\policy\neq \policy\opt$. Using the same iterative argument as in the proof of \autoref{lem:policy_improvement}, we get $Q^\policyopt(\st, \at) > Q^\policy(\st, \at)$ for all $(\st, \at)\in \sspace\times\aspace$, that is, the soft value of any other policy in $\Pi$ is lower than that of the converged policy. Hence $\policyopt$ is optimal in $\Pi$.
+\end{proof}
+
+
+
+
+\section{Enforcing Action Bounds}
+\label{app:action_bounds}
+%%SL.12.25: I don't think this appendix is referenced anywhere, can you reference it? TH: done.
+
+%%SL.12.25: generally, technical description of the method should use present tense, rather than past tense TH: good point. fixed.
+We use an unbounded Gaussian as the action distribution. However, in practice, the actions needs to be bounded to a finite interval. To that end, we
+apply an invertible squashing function 
+($\tanh$) to the Gaussian samples, and employ the change of variables formula to compute the likelihoods of the bounded actions. In the other words, let $\urv\in\reals^D$ be a random variable and $\mu(\urv|\state)$ the corresponding density with infinite support. Then $\action = \tanh(\urv)$, where $\tanh$ is applied elementwise, is a random variable with support in $(-1, 1)$ with a density given by
+\begin{align}
+\policy (\action|\state) &= \mu(\urv|\state)\left|\det \left(\frac{\mathrm{d}\action}{\mathrm{d}\urv} \right)\right|^{-1}.
+\end{align}
+Since the Jacobian $\nicefrac{\mathrm{d}\action}{\mathrm{d}\urv} = \mathrm{diag}(1 - \tanh^2(\urv))$ is diagonal, the log-likelihood has a simple form 
+%%SL.12.25: I don't understand, are these two equations supposed to be equivalent? is that obvious? it doesn't seem obvious to me TH: added explanation
+\begin{align}
+\log\policy (\action|\state) &= \log \mu(\urv|\state) - \sum_{i=1}^D\log\left(1 - \tanh^2(u_i)\right),
+\end{align}
+where $u_i$ is the $i^\mathrm{th}$ element of $\urv$.
+
+
+
+
+
+% \section{Sensitivity to Hyperparameters}
+% \label{app:hyper_sensitivity}
+
+% This section discusses the sensitivity to hyperparameters. All of the following experiments are on the HalfCheetah-v1 benchmark, and although we found these results to be representative in most cases, they may differ between the environments. For other environments, we only swept over the reward scale only. %, while fixing the other parameters. 
+
+% \vspace{-0.1in}
+% \paragraph{Reward scale.} Soft actor-critic is particularly sensitive to the reward magnitude, because it serves the role of the temperature of the energy-based optimal policy and thus controls its stochasticity. \autoref{fig:reward_scale} shows how learning performance changes when the reward scale is varied: For small reward magnitudes, the policy becomes nearly uniform, and consequently the fails to exploit the reward signal, resulting in substantial degradation of performance. For large reward magnitudes, the model learns quickly at first, but the policy quickly becomes nearly deterministic, leading to poor exploration and subsequent failure due to lack of adequate exploration. With the right reward magnitude, the model balances exploration and exploitation, leading to fast and stable learning. In practice, we found reward scale to be the only hyperparameter that requires substantial tuning, and since this parameter has a natural interpretation in the maximum entropy framework, this provides good intuition for how to adjust this parameter.
+
+% \vspace{-0.1in}
+% \paragraph{Mixture components.} We experimented with different numbers of mixture components in the Gaussian mixture policy (\autoref{fig:mixture_components}). We found that the number of components did not affect the learning performance very much, though larger numbers of components consistently attained somewhat better results. 
+
+% \vspace{-0.1in}
+% \paragraph{Policy evaluation.} Since SAC converges to stochastic policies, it is generally beneficial to make the final policy deterministic at the end for best performance. For evaluation, we approximate the maximum a posteriori action by choosing the action that maximizes the Q-function among the mixture component means. \autoref{fig:evaluation} compares training returns to test returns obtained with this strategy. The test returns are substantially better. It should be noted that  all of the training curves depict the sum of rewards, which is different from the objective optimized by SAC and SQL which both maximize also the entropy.
+
+% \vspace{-0.1in}
+% \paragraph{Target network update.} In \autoref{fig:tau} we varied the smoothing constant, $\tau$, for the target value network updates. A value of one corresponds to a hard update where the weights are copied directly at every iteration, and values close to zero correspond to exponentially moving average of the network weights. Interestingly, SAC is relatively insensitive to the smoothing constant: smaller $\tau$ tends to yield higher performance at the end with the cost of marginally slower progress in the beginning, but the difference is small. In prior work, the main use of the target network was to stabilize training~\citep{mnih2015human,lillicrap2015continuous}, but interestingly, SAC is able to learn stably also when effectively no separate target network is used, but instead the weights are copied directly ($\tau = 1$), although at the cost of minor degradation of performance.
+
+% \vspace{-0.1in}
+% \paragraph{Replay buffer size.} Next, we experimented with the size of the experience replay buffer (\autoref{fig:buffer_size}), which we found to be important for environments where the optimal policy becomes nearly deterministic at convergence, such as HalfCheetah-v1. For such environments, the exploration noise becomes negligible at the end, making the content of the replay buffer less diverse and resulting in overfitting and instability. Use of a higher capacity buffer solves this problem by allowing the method to remember the failures from the beginning of learning, but slows down learning by allocating some of the network capacity to modeling the suboptimal initial experience. Note that a return of just 4800 is considered as the threshold level for solving this benchmark task and that the performance in all cases is well beyond the threshold.  We used a buffer size of 10 million samples for HalfCheetah-v1, and 1 million samples for the other environments. 
+
+% \vspace{-0.1in}
+%\paragraph{Gradient steps per time step.} Finally, we experimented with the number of actor and critic gradient steps per time step of the algorithm (\autoref{fig:gradient_steps}). Prior work has observed that increasing the number of gradient steps for DDPG tends to improve sample efficiency~\citep{gu2017deeprobot,popov2017data}, but only up to a point. We found 4 gradient updates per time step to be optimal for DDPG, before we saw degradation of performance. SAC is able to effectively benefit from substantially larger numbers of gradient updates in most environments, with performance increasing steadily until 16 gradient updates per step. In some environments, such as Humanoid, we did not observe as much benefit. The ability to take multiple gradient steps without negatively affecting the algorithm is important especially for learning in the real world, where experience collection is the bottleneck, and it is typical to run the learning script asynchronously in a separate thread. In this experiment, we used a replay buffer size of 1 million samples, and therefore the performance suddenly drops after reaching a return of approximately 10 thousand due to the reason discussed in the previous section. 
+
+
+
+\newpage
+\section{Hyperparameters}
+\label{app:hypers}
+\autoref{tab:shared_params} lists the common SAC parameters used in the comparative evaluation in \autoref{fig:training_curves}.
+\begin{table}[H]
+\renewcommand{\arraystretch}{1.1}
+\centering
+\caption{SAC Hyperparameters}
+\label{tab:shared_params}
+\vspace{1mm}
+\begin{tabular}{l| l }
+\toprule
+Parameter &  Value\\
+\midrule
+optimizer &Adam \citep{kingma2014adam}\\
+learning rate & $3 \cdot 10^{-4}$\\
+discount ($\discount$) &  0.99\\
+replay buffer size & $10^6$\\
+number of hidden layers (all networks) & 2\\
+number of hidden units per layer & 256\\
+number of samples per minibatch & 256\\
+entropy target & $-\dim\left(\aspace\right)$ (\eg, -6 for HalfCheetah-v1)\\
+nonlinearity & ReLU\\
+target smoothing coefficient ($\tau$)& 0.005\\
+target update interval & 1\\
+gradient steps & 1\\
+\bottomrule
+\end{tabular}
+\end{table}

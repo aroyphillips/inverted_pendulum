@@ -97,3 +97,45 @@ Open and run all cells in:
 - `notebooks/full_example.ipynb`
 
 The notebook derives the initial state, generates the random-walk dataset, runs PE/readiness checks, evaluates a novel input, and produces plots/animation.
+
+For standardized grading of a submitted force sequence, use `notebooks/evaluate_trajectory.ipynb`. It loads the agreed initial state, accepts force trajectories with different horizons, simulates them through the project dynamics, and visualizes the result.
+
+## Data-driven controller workbooks
+
+Six method notebooks are available in `notebooks/`:
+
+- `01_pid_control.ipynb`
+- `02_koopman_willems_deepc.ipynb`
+- `03_gp_lqr.ipynb`
+- `04_rl_sac.ipynb`
+- `05_sindy_lqr.ipynb`
+- `06_regularized_deepc.ipynb`
+
+Each notebook loads or trains its controller, evaluates the fixed dataset initial state, samples jittered black-box rollouts, and includes best/worst animation cells.
+
+Training scripts:
+
+```bash
+python scripts/train_pid.py --dataset data/full_example/random_walk_dataset.npz
+python scripts/train_koopman_deepc.py --dataset data/full_example/random_walk_dataset.npz
+python scripts/train_gp_lqr.py --dataset data/full_example/random_walk_dataset.npz --max-train-points 5000
+python scripts/train_rl_sac.py --timesteps 200000
+python scripts/train_sindy_lqr.py --dataset data/full_example/random_walk_dataset.npz
+python scripts/train_deepc.py --dataset data/full_example/random_walk_dataset.npz
+```
+
+Comparison:
+
+```bash
+python scripts/compare_strategies.py \
+  --dataset data/full_example/random_walk_dataset.npz \
+  --controllers pid koopman_deepc gp_lqr rl_sac sindy_lqr deepc \
+  --initial-state-from-dataset \
+  --t-end 10.0 \
+  --force-limit 1.0 \
+  --out artifacts/comparison/results.json
+```
+
+The comparison writes `results.json`, `summary.csv`, `state_rollouts.png`, and `control_rollouts.png` under `artifacts/comparison/`.
+
+The SAC strategy is interactive black-box control: the policy sees only observations and rewards, while the Gymnasium environment privately advances the simulator. For a strict offline-only comparison, train RL inside a frozen learned model such as the GP or SINDy dynamics model.

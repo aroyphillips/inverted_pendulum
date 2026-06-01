@@ -1,0 +1,104 @@
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+\pdfoutput=1
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{graphicx}
+% \usepackage{subfig}
+\usepackage{hyperref}
+\usepackage{subcaption}
+\usepackage{graphicx}
+% \usepackage{caption}
+\usepackage{mathtools}
+% \usepackage{enumitem}
+\usepackage{dsfont}
+\usepackage{float}
+\usepackage{makecell}
+\usepackage{authblk}
+\usepackage{algorithm}
+\usepackage{algcompatible}
+
+\pdfminorversion=4
+
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\Authands{, }
+\makeatletter
+\renewcommand\AB@affilsepx{\hspace{1in} \protect\Affilfont}
+\makeatother
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\setlength{\belowcaptionskip}{-10pt}
+
+\title{\LARGE \bf
+Residual Reinforcement Learning for Robot Control
+}
+
+\author{Tobias Johannink$^{*1,3}$, Shikhar Bahl$^{*2}$, Ashvin Nair$^{*2}$, Jianlan Luo$^{1,2}$, Avinash Kumar$^{1}$,\\ Matthias Loskyll$^{1}$, Juan Aparicio Ojea$^{1}$, Eugen Solowjow$^{1}$, Sergey Levine$^2$}
+
+\begin{document}
+\maketitle
+\blfootnote{$\;^*$ First three authors contributed equally, $\;^1$ Siemens Corporation, \\ $^2$ University of California, Berkeley, $\;^3$ Hamburg University of Technology.}
+
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-10pt}
+
+\begin{abstract}
+Conventional feedback control methods can solve various types of robot control problems 
+very efficiently by capturing the structure with explicit models, such as rigid body equations of motion.
+However, many control problems in modern manufacturing deal with contacts and friction, which are difficult to capture with first-order physical modeling. 
+Hence, applying control design methodologies to these kinds of problems often results in brittle and inaccurate controllers, which have to be manually tuned for deployment.
+Reinforcement learning (RL) methods have been demonstrated to be capable of learning continuous robot controllers from interactions with the environment, even for problems that include friction and contacts.
+In this paper, we study how we can solve difficult control problems in the real world by decomposing them into a part that is solved efficiently by conventional feedback control methods, and the residual which is solved with RL. 
+The final control policy is a superposition of both control signals.
+We demonstrate our approach by training an agent to successfully perform a real-world block assembly task involving contacts and unstable objects.
+\end{abstract}
+
+%=============================================================================== SECTIONS
+
+\input{texs/01_introduction.tex}
+% \input{texs/02_related_work.tex} %% related work moved after results 
+\input{texs/03_background.tex}
+\input{texs/04_method.tex}
+\input{texs/05_experiments.tex}
+\input{texs/06_results.tex}
+\input{texs/07_discussion.tex}
+
+% \section{Acknowledgements}
+
+
+{\small
+\bibliographystyle{IEEEtran}
+\bibliography{example}
+}
+
+\end{document}

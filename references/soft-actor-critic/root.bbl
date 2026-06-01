@@ -1,0 +1,319 @@
+\begin{thebibliography}{47}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abdolmaleki et~al.(2018)Abdolmaleki, Springenberg, Tassa, Munos,
+  Heess, and Riedmiller]{abdolmaleki2018maximum}
+Abdolmaleki, A., Springenberg, J.~T., Tassa, Y., Munos, R., Heess, N., and
+  Riedmiller, M.
+\newblock Maximum a posteriori policy optimisation.
+\newblock \emph{arXiv preprint arXiv:1806.06920}, 2018.
+
+\bibitem[Barto et~al.(1983)Barto, Sutton, and Anderson]{barto1983neuronlike}
+Barto, A.~G., Sutton, R.~S., and Anderson, C.~W.
+\newblock Neuronlike adaptive elements that can solve difficult learning
+  control problems.
+\newblock \emph{IEEE transactions on systems, man, and cybernetics}, pp.\
+  834--846, 1983.
+
+\bibitem[Bhatnagar et~al.(2009)Bhatnagar, Precup, Silver, Sutton, Maei, and
+  Szepesv{\'a}ri]{bhatnagar2009convergent}
+Bhatnagar, S., Precup, D., Silver, D., Sutton, R.~S., Maei, H.~R., and
+  Szepesv{\'a}ri, C.
+\newblock Convergent temporal-difference learning with arbitrary smooth
+  function approximation.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  pp.\  1204--1212, 2009.
+
+\bibitem[Boyd \& Vandenberghe(2004)Boyd and Vandenberghe]{boyd2004convex}
+Boyd, S. and Vandenberghe, L.
+\newblock \emph{Convex optimization}.
+\newblock Cambridge university press, 2004.
+
+\bibitem[Brockman et~al.(2016)Brockman, Cheung, Pettersson, Schneider,
+  Schulman, Tang, and Zaremba]{brockman2016openai}
+Brockman, G., Cheung, V., Pettersson, L., Schneider, J., Schulman, J., Tang,
+  J., and Zaremba, W.
+\newblock Open{AI} gym.
+\newblock \emph{arXiv preprint arXiv:1606.01540}, 2016.
+
+\bibitem[Duan et~al.(2016)Duan, Chen, Schulman, and
+  Abbeel]{duan2016benchmarking}
+Duan, Y., Chen, X.~Houthooft, R., Schulman, J., and Abbeel, P.
+\newblock Benchmarking deep reinforcement learning for continuous control.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2016.
+
+\bibitem[Fox et~al.(2016)Fox, Pakman, and Tishby]{fox2015taming}
+Fox, R., Pakman, A., and Tishby, N.
+\newblock Taming the noise in reinforcement learning via soft updates.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence (UAI)},
+  2016.
+
+\bibitem[Fujimoto et~al.(2018)Fujimoto, van Hoof, and
+  Meger]{fujimoto2018addressing}
+Fujimoto, S., van Hoof, H., and Meger, D.
+\newblock Addressing function approximation error in actor-critic methods.
+\newblock \emph{arXiv preprint arXiv:1802.09477}, 2018.
+
+\bibitem[Gruslys et~al.(2017)Gruslys, Azar, Bellemare, and
+  Munos]{gruslys2017reactor}
+Gruslys, A., Azar, M.~G., Bellemare, M.~G., and Munos, R.
+\newblock The reactor: A sample-efficient actor-critic architecture.
+\newblock \emph{arXiv preprint arXiv:1704.04651}, 2017.
+
+\bibitem[Gu et~al.(2016)Gu, Lillicrap, Ghahramani, Turner, and Levine]{gu2016q}
+Gu, S., Lillicrap, T., Ghahramani, Z., Turner, R.~E., and Levine, S.
+\newblock Q-prop: Sample-efficient policy gradient with an off-policy critic.
+\newblock \emph{arXiv preprint arXiv:1611.02247}, 2016.
+
+\bibitem[Gu et~al.(2017)Gu, Holly, Lillicrap, and Levine]{gu2017deeprobot}
+Gu, S., Holly, E., Lillicrap, T., and Levine, S.
+\newblock Deep reinforcement learning for robotic manipulation with
+  asynchronous off-policy updates.
+\newblock In \emph{International Conference on Robotics and Automation (ICRA)},
+  pp.\  3389--3396. IEEE, 2017.
+
+\bibitem[Haarnoja et~al.(2017)Haarnoja, Tang, Abbeel, and
+  Levine]{haarnoja2017reinforcement}
+Haarnoja, T., Tang, H., Abbeel, P., and Levine, S.
+\newblock Reinforcement learning with deep energy-based policies.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1352--1361, 2017.
+
+\bibitem[Haarnoja et~al.(2018{\natexlab{a}})Haarnoja, Hartikainen, Abbeel, and
+  Levine]{haarnoja2018latent}
+Haarnoja, T., Hartikainen, K., Abbeel, P., and Levine, S.
+\newblock Latent space policies for hierarchical reinforcement learning.
+\newblock In \emph{International Conference on Machine Learning (ICML)},
+  2018{\natexlab{a}}.
+
+\bibitem[Haarnoja et~al.(2018{\natexlab{b}})Haarnoja, Pong, Zhou, Dalal,
+  Abbeel, and Levine]{haarnoja2018composable}
+Haarnoja, T., Pong, V., Zhou, A., Dalal, M., Abbeel, P., and Levine, S.
+\newblock Composable deep reinforcement learning for robotic manipulation.
+\newblock In \emph{International Conference on Robotics and Automation (ICRA)}.
+  IEEE, 2018{\natexlab{b}}.
+
+\bibitem[Haarnoja et~al.(2018{\natexlab{c}})Haarnoja, Zhou, Abbeel, and
+  Levine]{haarnoja2018soft}
+Haarnoja, T., Zhou, A., Abbeel, P., and Levine, S.
+\newblock Soft actor-critic: Off-policy maximum entropy deep reinforcement
+  learning with a stochastic actor.
+\newblock In \emph{International Conference on Machine Learning (ICML)},
+  2018{\natexlab{c}}.
+
+\bibitem[Hasselt(2010)]{hasselt2010double}
+Hasselt, H.~V.
+\newblock Double {Q}-learning.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  pp.\  2613--2621, 2010.
+
+\bibitem[Heess et~al.(2015)Heess, Wayne, Silver, Lillicrap, Erez, and
+  Tassa]{heess2015learning}
+Heess, N., Wayne, G., Silver, D., Lillicrap, T., Erez, T., and Tassa, Y.
+\newblock Learning continuous control policies by stochastic value gradients.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  pp.\  2944--2952, 2015.
+
+\bibitem[Henderson et~al.(2017)Henderson, Islam, Bachman, Pineau, Precup, and
+  Meger]{henderson2017deep}
+Henderson, P., Islam, R., Bachman, P., Pineau, J., Precup, D., and Meger, D.
+\newblock Deep reinforcement learning that matters.
+\newblock \emph{arXiv preprint arXiv:1709.06560}, 2017.
+
+\bibitem[Kappen(2005)]{kappen2005path}
+Kappen, H.~J.
+\newblock Path integrals and symmetry breaking for optimal control theory.
+\newblock \emph{Journal of Statistical Mechanics: Theory And Experiment},
+  2005\penalty0 (11):\penalty0 P11011, 2005.
+
+\bibitem[Kenneally et~al.(2016)Kenneally, De, and
+  Koditschek]{kenneally2016design}
+Kenneally, G., De, A., and Koditschek, D.~E.
+\newblock Design principles for a family of direct-drive legged robots.
+\newblock \emph{IEEE Robotics and Automation Letters}, 1\penalty0 (2):\penalty0
+  900--907, 2016.
+
+\bibitem[Kingma \& Ba(2015)Kingma and Ba]{kingma2014adam}
+Kingma, D. and Ba, J.
+\newblock Adam: A method for stochastic optimization.
+\newblock In \emph{International Conference for Learning Presentations (ICLR)},
+  2015.
+
+\bibitem[Levine \& Koltun(2013)Levine and Koltun]{levine2013guided}
+Levine, S. and Koltun, V.
+\newblock Guided policy search.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1--9, 2013.
+
+\bibitem[Levine et~al.(2016)Levine, Finn, Darrell, and Abbeel]{levine2016end}
+Levine, S., Finn, C., Darrell, T., and Abbeel, P.
+\newblock End-to-end training of deep visuomotor policies.
+\newblock \emph{Journal of Machine Learning Research}, 17\penalty0
+  (39):\penalty0 1--40, 2016.
+
+\bibitem[Lillicrap et~al.(2015)Lillicrap, Hunt, Pritzel, Heess, Erez, Tassa,
+  Silver, and Wierstra]{lillicrap2015continuous}
+Lillicrap, T.~P., Hunt, J.~J., Pritzel, A., Heess, N., Erez, T., Tassa, Y.,
+  Silver, D., and Wierstra, D.
+\newblock Continuous control with deep reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:1509.02971}, 2015.
+
+\bibitem[Mnih et~al.(2013)Mnih, Kavukcuoglu, Silver, Graves, Antonoglou,
+  Wierstra, and Riedmiller]{mnih2013playing}
+Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra,
+  D., and Riedmiller, M.
+\newblock Playing atari with deep reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:1312.5602}, 2013.
+
+\bibitem[Mnih et~al.(2015)Mnih, Kavukcuoglu, Silver, Rusu, Veness, Bellemare,
+  Graves, Riedmiller, Fidjeland, Ostrovski, et~al.]{mnih2015human}
+Mnih, V., Kavukcuoglu, K., Silver, D., Rusu, A.~A., Veness, J., Bellemare,
+  M.~G., Graves, A., Riedmiller, M., Fidjeland, A.~K., Ostrovski, G., et~al.
+\newblock Human-level control through deep reinforcement learning.
+\newblock \emph{Nature}, 518\penalty0 (7540):\penalty0 529--533, 2015.
+
+\bibitem[Mnih et~al.(2016)Mnih, Badia, Mirza, Graves, Lillicrap, Harley,
+  Silver, and Kavukcuoglu]{mnih2016asynchronous}
+Mnih, V., Badia, A.~P., Mirza, M., Graves, A., Lillicrap, T.~P., Harley, T.,
+  Silver, D., and Kavukcuoglu, K.
+\newblock Asynchronous methods for deep reinforcement learning.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2016.
+
+\bibitem[Nachum et~al.(2017{\natexlab{a}})Nachum, Norouzi, Xu, and
+  Schuurmans]{nachum2017bridging}
+Nachum, O., Norouzi, M., Xu, K., and Schuurmans, D.
+\newblock Bridging the gap between value and policy based reinforcement
+  learning.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  pp.\  2772--2782, 2017{\natexlab{a}}.
+
+\bibitem[Nachum et~al.(2017{\natexlab{b}})Nachum, Norouzi, Xu, and
+  Schuurmans]{nachum2017trust}
+Nachum, O., Norouzi, M., Xu, K., and Schuurmans, D.
+\newblock Trust-{PCL}: An off-policy trust region method for continuous
+  control.
+\newblock \emph{arXiv preprint arXiv:1707.01891}, 2017{\natexlab{b}}.
+
+\bibitem[O'Donoghue et~al.(2016)O'Donoghue, Munos, Kavukcuoglu, and
+  Mnih]{o2016pgq}
+O'Donoghue, B., Munos, R., Kavukcuoglu, K., and Mnih, V.
+\newblock {PGQ}: Combining policy gradient and {Q}-learning.
+\newblock \emph{arXiv preprint arXiv:1611.01626}, 2016.
+
+\bibitem[Peters \& Schaal(2008)Peters and Schaal]{peters2008reinforcement}
+Peters, J. and Schaal, S.
+\newblock Reinforcement learning of motor skills with policy gradients.
+\newblock \emph{Neural networks}, 21\penalty0 (4):\penalty0 682--697, 2008.
+
+\bibitem[Rawlik et~al.(2012)Rawlik, Toussaint, and
+  Vijayakumar]{rawlik2012stochastic}
+Rawlik, K., Toussaint, M., and Vijayakumar, S.
+\newblock On stochastic optimal control and reinforcement learning by
+  approximate inference.
+\newblock \emph{Robotics: Science and Systems (RSS)}, 2012.
+
+\bibitem[Schulman et~al.(2015)Schulman, Levine, Abbeel, Jordan, and
+  Moritz]{schulman2015trust}
+Schulman, J., Levine, S., Abbeel, P., Jordan, M.~I., and Moritz, P.
+\newblock Trust region policy optimization.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1889--1897, 2015.
+
+\bibitem[Schulman et~al.(2017{\natexlab{a}})Schulman, Abbeel, and
+  Chen]{schulman2017equivalence}
+Schulman, J., Abbeel, P., and Chen, X.
+\newblock Equivalence between policy gradients and soft {Q}-learning.
+\newblock \emph{arXiv preprint arXiv:1704.06440}, 2017{\natexlab{a}}.
+
+\bibitem[Schulman et~al.(2017{\natexlab{b}})Schulman, Wolski, Dhariwal,
+  Radford, and Klimov]{schulman2017proximal}
+Schulman, J., Wolski, F., Dhariwal, P., Radford, A., and Klimov, O.
+\newblock Proximal policy optimization algorithms.
+\newblock \emph{arXiv preprint arXiv:1707.06347}, 2017{\natexlab{b}}.
+
+\bibitem[Silver et~al.(2014)Silver, Lever, Heess, Degris, Wierstra, and
+  Riedmiller]{silver2014deterministic}
+Silver, D., Lever, G., Heess, N., Degris, T., Wierstra, D., and Riedmiller, M.
+\newblock Deterministic policy gradient algorithms.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2014.
+
+\bibitem[Silver et~al.(2016)Silver, Huang, Maddison, Guez, Sifre, van~den
+  Driessche, Schrittwieser, Antonoglou, Panneershelvam, Lanctot, Dieleman,
+  Grewe, Nham, Kalchbrenner, Sutskever, Lillicrap, Leach, Kavukcuoglu, Graepel,
+  and Hassabis]{silver2016mastering}
+Silver, D., Huang, A., Maddison, C.~J., Guez, A., Sifre, L., van~den Driessche,
+  G., Schrittwieser, J., Antonoglou, I., Panneershelvam, V., Lanctot, M.,
+  Dieleman, S., Grewe, D., Nham, J., Kalchbrenner, N., Sutskever, I.,
+  Lillicrap, T., Leach, M., Kavukcuoglu, K., Graepel, T., and Hassabis, D.
+\newblock Mastering the game of go with deep neural networks and tree search.
+\newblock \emph{Nature}, 529\penalty0 (7587):\penalty0 484--489, Jan 2016.
+\newblock ISSN 0028-0836.
+\newblock Article.
+
+\bibitem[Sutton \& Barto(1998)Sutton and Barto]{sutton1998reinforcement}
+Sutton, R.~S. and Barto, A.~G.
+\newblock \emph{Reinforcement learning: An introduction}, volume~1.
+\newblock MIT press Cambridge, 1998.
+
+\bibitem[Tan et~al.(2018)Tan, Zhang, Coumans, Iscen, Bai, Hafner, Bohez, and
+  Vanhoucke]{tan2018sim}
+Tan, J., Zhang, T., Coumans, E., Iscen, A., Bai, Y., Hafner, D., Bohez, S., and
+  Vanhoucke, V.
+\newblock Sim-to-real: Learning agile locomotion for quadruped robots.
+\newblock In \emph{Robotics: Science and Systems (RSS)}, 2018.
+
+\bibitem[Thomas(2014)]{thomas2014bias}
+Thomas, P.
+\newblock Bias in natural actor-critic algorithms.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  441--448, 2014.
+
+\bibitem[Todorov(2007)]{todorov2007linearly}
+Todorov, E.
+\newblock Linearly-solvable {M}arkov decision problems.
+\newblock In \emph{Advances in Neural Information Processing Systems}, pp.\
+  1369--1376. MIT Press, 2007.
+
+\bibitem[Todorov(2008)]{todorov2008general}
+Todorov, E.
+\newblock General duality between optimal control and estimation.
+\newblock In \emph{IEEE Conference on Decision and Control (CDC)}, pp.\
+  4286--4292. IEEE, 2008.
+
+\bibitem[Toussaint(2009)]{toussaint2009robot}
+Toussaint, M.
+\newblock Robot trajectory optimization using approximate inference.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1049--1056. ACM, 2009.
+
+\bibitem[Williams(1992)]{williams1992simple}
+Williams, R.~J.
+\newblock Simple statistical gradient-following algorithms for connectionist
+  reinforcement learning.
+\newblock \emph{Machine learning}, 8\penalty0 (3-4):\penalty0 229--256, 1992.
+
+\bibitem[Zhu et~al.(2018)Zhu, Gupta, Rajeswaran, Levine, and
+  Kumar]{zhu2018dexterous}
+Zhu, H., Gupta, A., Rajeswaran, A., Levine, S., and Kumar, V.
+\newblock Dexterous manipulation with deep reinforcement learning: Efficient,
+  general, and low-cost.
+\newblock \emph{arXiv preprint arXiv:1810.06045}, 2018.
+
+\bibitem[Ziebart(2010)]{ziebart2010modeling}
+Ziebart, B.~D.
+\newblock \emph{Modeling purposeful adaptive behavior with the principle of
+  maximum causal entropy}.
+\newblock Carnegie Mellon University, 2010.
+
+\bibitem[Ziebart et~al.(2008)Ziebart, Maas, Bagnell, and
+  Dey]{ziebart2008maximum}
+Ziebart, B.~D., Maas, A.~L., Bagnell, J.~A., and Dey, A.~K.
+\newblock Maximum entropy inverse reinforcement learning.
+\newblock In \emph{AAAI Conference on Artificial Intelligence (AAAI)}, pp.\
+  1433--1438, 2008.
+
+\end{thebibliography}

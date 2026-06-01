@@ -1,0 +1,58 @@
+\usepackage{graphicx}
+% \usepackage{amsfonts}
+% \usepackage{amsopn}
+\usepackage{amsmath}
+\usepackage{amssymb}
+% \usepackage{mathtools}
+% \usepackage{bbm}
+\usepackage{color}
+\usepackage{amsthm}
+\usepackage{placeins}
+\usepackage{wrapfig}
+% \usepackage{float}
+\usepackage{subcaption}
+% \usepackage{subfigure}
+\usepackage{nicefrac}
+% \usepackage{appendix}
+% \usepackage{natbib}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}  
+\usepackage{algpseudocode}
+
+% \makeatletter  % Check IEEE style file for the reason of this. Makes hyperrefs to bib items work.
+% \let\NAT@parse\undefined
+% \makeatother
+
+\usepackage{hyperref}
+% \usepackage[ruled, linesnumbered]{algorithm2e}  %% ICML template does not liek 2e version.
+
+\renewcommand{\cite}{\citep}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\input{defs}
+
+%% Autorefs
+\newcommand{\algorithmautorefname}{Algorithm}%
+\renewcommand{\sectionautorefname}{Section}%
+\renewcommand{\subsectionautorefname}{Section}%
+\renewcommand{\theoremautorefname}{Theorem}
+\newcommand{\lemmaautorefname}{Lemma}
+\renewcommand{\subfigureautorefname}{Figure}
+
+%% Manual fix to make hyperrefs to appendices show up correctly
+\newcommand{\aref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% \def\alignautorefname~#1\null{%
+%   (#1)\null
+%  Equation~#1\null
+% }\def\equationautorefname~#1\null{%
+  % (#1)\null
+%   Equation~#1\null
+% }

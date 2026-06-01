@@ -1,0 +1,48 @@
+\section{Preliminaries}\label{sec:background}
+In this section, we set up our problem and summarize the foundations of classical control and reinforcement learning that we build on in our approach.
+
+\subsection{Problem Statement - System Theoretic Interpretation}
+%
+The class of control problems that we are dealing with in this paper can be viewed from a dynamical systems point of view as follows.
+Consider a dynamical system that consists of a fully actuated robot and underactuated objects in the robot's environment.
+The robot and the objects in its environment are described by their states $s_\text{m}$ and $s_\text{o}$, respectively. 
+The robot can be controlled through the control input $u$ while the objects cannot be directly controlled.
+However, the robot's states are coupled with the objects' states so that indirect control of $s_\text{o}$ is possible through $u$.
+This is for example the case if the agent has large inertia and is interacting with small parts as is common in manufacturing.
+The states of agent and objects can either be fully observable or they can be estimated from measurements.
+
+The time-discrete equations of motion of the overall dynamical system comprise the robot and objects and can be stated as
+%
+\begin{equation}
+\label{eq:eom}
+    s_{t+1}=\begin{bmatrix}s_{\text{m},t+1} \\ s_{\text{o}, t+1}\end{bmatrix}
+    =\begin{bmatrix}A(s_{\text{m},t}) & 0 \\ B(s_{\text{m},t}, s_{\text{o},t}) & C(s_{\text{o},t})\end{bmatrix}\begin{bmatrix}s_{\text{m},t} \\ s_{\text{o},t}\end{bmatrix}  + D\begin{bmatrix}u_t \\ 0\end{bmatrix},
+\end{equation}
+%
+where the states can also be subject to algebraic constraints, which we do no state explicitly here.
+
+The type of control objectives that we are interested in can be summarized as controlling the agent in order to manipulate the objects while also fulfilling a geometric objective such as trajectory following.
+It is difficult to solve the control problem directly with conventional feedback control approaches, which compute the difference between a desired and a measured state variable.
+In order to achieve best system performance feedback control methods require well understood and modeled state transition dynamics. 
+Finding the optimal control parameters can be difficult or even impossible if the system dynamics are not fully known.
+
+In \eqref{eq:eom} the state transition matrices although $A(s_\text{m})$ and $C(s_\text{o})$ are usually known to a certain extent, because they represent rigid body dynamics, the coupling matrix $B(s_\text{m}, s_\text{o})$ is usually not known. 
+Physical interactions such as contacts and friction forces are the dominant effects that $B(s_\text{m}, s_\text{o})$  needs to capture, which also applies to algebraic constraints, which are functions of $s_\text{m}$ and $s_\text{o}$ as well. 
+Hence, conventional feedback control synthesis for determining $u$ to control $s_\text{o}$ is very difficult, and requires trial and error in practice.
+Another difficulty for directly designing feedback controllers is due to the fact that, for many control objectives, the states $s_\text{o}$ need to fulfill conditions that cannot be expressed as deviations (errors) from desired states. 
+This is often the case when we only know the final goal rather than a full trajectory.
+
+Instead of directly designing a feedback control system, we can instead specify the goal via a reward function. These reward functions can depend on both $s_\text{m}$ and $s_\text{o}$, where the terms that depend on $s_\text{m}$ are position related objectives.
+
+\subsection{Interpretation as a Reinforcement Learning Problem}
+ 
+In reinforcement learning, we consider the standard Markov decision process framework for picking optimal actions to maximize rewards over discrete timesteps in an environment $E$. At every timestep $t$, an agent is in a state $s_t$, takes an action $u_t$, receives a reward $r_t$, and $E$ evolves to state $s_{t+1}$. In reinforcement learning, the agent must learn a policy $u_t = \pi(s_t)$ to maximize expected returns.  We denote the return by $R_t = \sum_{i=t}^T \gamma^{(i - t)} r_i$, where $T$ is the horizon that the agent optimizes over and $\gamma$ is a discount factor for future rewards. The agent's objective is to maximize expected return from the start distribution $J = \E_{r_i, s_i \sim E, a_i \sim \pi}[R_0]$. 
+
+Unlike the previous section, RL does not attempt to model the unknown coupled dynamics of the agent and the object. Instead, it finds actions that maximizes rewards, without making any assumptions about the system dynamics.
+In this paper, we use value-based RL methods. These methods estimate the state-action value function:
+\begin{align}
+    Q^\pi & (s_t, u_t) = \E_{r_i, s_i \sim E, u_i \sim \pi}[R_t|s_t, u_t] \label{eqn:Q} \\
+                   & = \E_{r_t, s_{t+1} \sim E}[r_t + \gamma \E_{u_{t+1} \sim \pi}[Q^\pi(s_{t+1}, u_{t+1})]] \label{eqn:bellman}
+\end{align}
+
+\noindent Equation \ref{eqn:bellman} is a recursive version of Equation \ref{eqn:Q}, and is known as the Bellman equation. The Bellman equation allows us to estimate $Q$ via approximate dynamic programming. Value-based methods can be learned off-policy, making them very sample efficient, which is vital for real-world robot learning.
