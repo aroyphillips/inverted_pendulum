@@ -13,6 +13,7 @@ from controllers.koopman_deepc import KoopmanDeePCController
 from controllers.pid import PIDController
 from controllers.rl_sac import RLController
 from controllers.sindy_lqr import SINDyLQRController
+from controllers.sindy_mpc import SINDyMPCController
 from eval.metrics import rollout_metrics
 from eval.rollout import rollout_controller
 from models.dataset_views import load_control_dataset
@@ -24,6 +25,7 @@ TRAIN_COMMANDS = {
     "koopman_deepc": "python scripts/train_koopman_deepc.py --dataset data/full_example/random_walk_dataset.npz",
     "gp_lqr": "python scripts/train_gp_lqr.py --dataset data/full_example/random_walk_dataset.npz --max-train-points 5000",
     "sindy_lqr": "python scripts/train_sindy_lqr.py --dataset data/full_example/random_walk_dataset.npz",
+    "sindy_mpc": "python scripts/train_sindy_mpc.py --dataset data/full_example/random_walk_dataset.npz",
     "rl_sac": "python scripts/train_rl_sac.py --timesteps 200000",
 }
 
@@ -44,6 +46,8 @@ def load_controller(name: str):
         return GPLQRController.load(path)
     if name == "sindy_lqr":
         return SINDyLQRController.load(path)
+    if name == "sindy_mpc":
+        return SINDyMPCController.load(path)
     if name == "rl_sac":
         return RLController.load_sac(path)
     raise ValueError(f"Unknown controller: {name}")

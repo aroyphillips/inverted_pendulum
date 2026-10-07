@@ -14,13 +14,15 @@ This document gives a precise, reproducible description of the SAC controller us
 $$\mathbf{x} = [x,\;\dot{x},\;\theta,\;\dot{\theta}]^\top\in\mathbb{R}^4,$$
 with continuous scalar control input $u\in[-u_{\max},u_{\max}]$. The agent outputs a normalized action $a\in(-1,1)$ which is scaled to torque/force: $u = \operatorname{clip}(a\cdot u_{\max}, -u_{\max}, u_{\max})$.
 
-Transitions are produced by integrating the system ODE at fixed step $\Delta t=0.02\,$s. The per-step reward is the negative LQR-style quadratic cost:
+Transitions are produced by integrating the system ODE at fixed step $\Delta t=0.02\,$s. The per-step base reward is the negative quadratic cost:
 $$r(\mathbf{x}_t,u_t) = -\bigl(\mathbf{x}_t^\top Q\,\mathbf{x}_t + u_t^\top R\,u_t\bigr),$$
-with symmetric positive semi-definite state cost matrix $Q$ and scalar input penalty $R>0$ (values are recorded in `sac.metadata.json`). The discount factor used is $\gamma=0.99$.
+where $Q$ and $R$ are set by **Bryson's rule** [Bryson & Ho, 1969]: $Q_i = 1/\text{tol}_i^2$ from the task settling tolerances and $R = 1/u_{\max}^2$ — no knowledge of system equations required. The reward also includes a two-stage shaping term (upright bonus near $\theta = 0$, cosine-shaped recovery signal elsewhere), a one-time settle-and-remain streak bonus, and a fall penalty. All parameter values are recorded in `sac.metadata.json`. The discount factor used is $\gamma=0.99$.
 
-Observations: the policy receives a normalized observation
-$$\mathbf{o}_t = \mathbf{x}_t \oslash \mathbf{s},$$
-where $\mathbf{s}=[1.0,\;2.0,\;0.5,\;5.0]^\top$ is the element-wise scale vector used throughout experiments to map state components to approximately unit range.
+Observations: the policy receives a 5-dimensional observation
+
+$$\mathbf{o}_t = \bigl[x/s_0,\;\dot{x}/s_1,\;\sin\theta,\;\cos\theta,\;\dot{\theta}/s_3\bigr]^\top$$
+
+where $\mathbf{s} = [s_0, s_1, s_3]$ is the per-state standard deviation vector computed from the training dataset via `data_driven_obs_scale(dataset)`. This normalises each channel to approximately unit variance without requiring prior knowledge of the system's physical operating range. The $\sin\theta / \cos\theta$ channels replace raw $\theta$; they require no scaling since they are already bounded in $[-1, 1]$.
 
 **SAC objective and updates.** We use the maximum-entropy RL objective: for a stochastic policy $\pi_\phi(a|\mathbf{o})$ and temperature $\alpha>0$,
 $$J(\pi) = \sum_{t=0}^\infty \mathbb{E}_{(\mathbf{o}_t,a_t)\sim\rho_\pi}\Big[\gamma^t\big(r(\mathbf{o}_t,a_t) + \alpha\,\mathcal{H}(\pi(\cdot|\mathbf{o}_t))\big)\Big],$$
@@ -59,9 +61,10 @@ All networks are initialised using PyTorch/NumPy default seeds (see Reproducibil
 | Critic LR | 3e-4 |
 | Temperature LR | 3e-4 |
 | Batch size | 256 |
-| Replay buffer size | min(200000, total_steps) |
-| Discount (\gamma) | 0.99 |
-| Soft update (\tau) | 0.02 |
+| Replay buffer size | min(1,000,000, total_steps) |
+| Discount ($\gamma$) | 0.99 |
+| Soft update ($\tau$) | 0.005 |
+| Learning starts | 10,000 |
 | Initial temperature (\alpha) | auto-initialised to match target entropy |
 | Target entropy (\bar{\mathcal{H}}) | -1 (automatic target) |
 | Gradient steps per env step | 1 (configurable) |
@@ -136,4 +139,5 @@ python scripts/evaluate_controller.py --checkpoint artifacts/rl/checkpoints/best
 - Haarnoja, T., Zhou, A., Hartikainen, K., Tucker, G., Ha, S., Tan, J., … Levine, S. (2018b). Soft Actor–Critic Algorithms and Applications. arXiv:1812.05905.
 - Fujimoto, S., van Hoof, H. & Meger, D. (2018). Addressing Function Approximation Error in Actor–Critic Methods. Proceedings of ICML.
 - Bengio, Y., Louradour, J., Collobert, R. & Weston, J. (2009). Curriculum Learning. Proceedings of ICML.
+- Bryson, A. E. & Ho, Y.-C. (1969). *Applied Optimal Control*. Blaisdell. (Bryson's rule for Q/R selection.)
 - Henderson, P., Islam, R., Bachman, P., Pineau, J., Precup, D. & Meger, D. (2018). Deep Reinforcement Learning That Matters. AAAI.

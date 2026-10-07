@@ -24,17 +24,21 @@ class EnvConfig:
     exact_reset_probability: float = 0.5
     jitter_scale: tuple[float, float, float, float] = (0.02, 0.05, 0.03, 0.1)
     # slots: (x_scale, x_dot_scale, _unused_theta, theta_dot_scale)
-    # slot 2 is unused — sin(theta) and cos(theta) replace raw theta and need no scaling
-    observation_scale: tuple[float, float, float, float] = (1.0, 2.0, 1.0, 5.0)
+    # slot 2 is unused — sin(theta) and cos(theta) replace raw theta and need no scaling.
+    # Defaults are neutral (1.0); the notebook computes data-driven values via
+    # data_driven_obs_scale(dataset) and passes them here before training.
+    observation_scale: tuple[float, float, float, float] = (1.0, 1.0, 1.0, 1.0)
     settle_bonus: float = 50.0          # one-time reward when settle-and-remain streak is achieved
     settle_streak_steps: int = 50       # consecutive in-tolerance steps needed for bonus
     fall_penalty: float = 100.0         # extra penalty applied when the pendulum falls
-    # Reward weights (base quadratic cost)
-    q_x: float = 1.0
-    q_xdot: float = 0.1
-    q_theta: float = 20.0
-    q_thetadot: float = 1.0
-    r_u: float = 0.01
+    # Reward weights — Bryson's rule: Q_i = 1/tol_i^2, R = 1/u_max^2.
+    # Settling tolerances: |x|≤0.25 m, |ẋ|≤0.25 m/s, |θ|≤2°≈0.035 rad, |θ̇|≤0.1 rad/s.
+    # Heavy theta weight follows from the strict 2° tolerance; no ODE knowledge required.
+    q_x: float = 1.0 / (0.25**2)                   # = 16.0
+    q_xdot: float = 1.0 / (0.25**2)                # = 16.0
+    q_theta: float = 1.0 / (0.034906585**2)         # ≈ 820.9  (np.deg2rad(2.0))
+    q_thetadot: float = 1.0 / (0.1**2)             # = 100.0
+    r_u: float = 1.0 / (5.0**2)                    # = 0.04
     # Two-stage shaping: upright bonus when |theta_err| < near_upright_threshold
     upright_bonus: float = 5.0
     recovery_bonus: float = 1.0

@@ -1,0 +1,267 @@
+\begin{thebibliography}{10}
+
+\bibitem{Bai2014aiaa}
+Zhe Bai, Thakshila Wimalajeewa, Zachary Berger, Guannan Wang, Mark Glauser, and
+  Pramod~K Varshney.
+\newblock Low-dimensional approach for reconstruction of airfoil data via
+  compressive sensing.
+\newblock {\em AIAA Journal}, pages 1--14, 2014.
+
+\bibitem{Baraniuk2007ieeespm}
+R.~G. Baraniuk.
+\newblock Compressive sensing.
+\newblock {\em \hspace{-.03in}IEEE\hspace{-.01in} Signal\hspace{-.01in}
+  Processing\hspace{-.01in} Magazine\hspace{-.01in}}, 24(4):118--120, 2007.
+
+\bibitem{Berkooz:1993}
+G.~Berkooz, P.~Holmes, and J.~L. Lumley.
+\newblock The proper orthogonal decomposition in the analysis of turbulent
+  flows.
+\newblock {\em Annual Review of Fluid Mechanics}, 23:539--575, 1993.
+
+\bibitem{Bongard2007pnas}
+Josh Bongard and Hod Lipson.
+\newblock Automated reverse engineering of nonlinear dynamical systems.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  104(24):9943--9948, 2007.
+
+\bibitem{Brunton2015amr}
+S.~L. Brunton and B.~R. Noack.
+\newblock Closed-loop turbulence control: Progress and challenges.
+\newblock {\em Applied Mechanics Reviews}, 67:050801--1--050801--48, 2015.
+
+\bibitem{Brunton2014siads}
+S.~L. Brunton, J.~H. Tu, I.~Bright, and J.~N. Kutz.
+\newblock Compressive sensing and low-rank libraries for classification of
+  bifurcation regimes in nonlinear dynamical systems.
+\newblock {\em SIAM Journal on Applied Dynamical Systems}, 13(4):1716--1732,
+  2014.
+
+\bibitem{Candes2006picm}
+E.~J. Cand\`es.
+\newblock Compressive sensing.
+\newblock {\em Proc. International Congress of Mathematics}, 2006.
+
+\bibitem{Candes2006bieeetit}
+E.~J. Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Robust uncertainty principles: exact signal reconstruction from
+  highly incomplete frequency information.
+\newblock {\em IEEE Transactions on Information Theory}, 52(2):489--509, 2006.
+
+\bibitem{Candes2006cpam}
+E.~J. Cand\`es, J.~Romberg, and T.~Tao.
+\newblock Stable\hspace{-.01in} signal\hspace{-.01in} recovery\hspace{-.01in}
+  from\hspace{-.01in} incomplete\hspace{-.01in} and\hspace{-.01in}
+  inaccurate\hspace{-.01in} measurements.
+\newblock {\em \hspace{-.02in}Communications in Pure and Applied Mathematics},
+  59(8):1207--1223, 2006.
+
+\bibitem{Chartrand2011isrnam}
+Rick Chartrand.
+\newblock Numerical differentiation of noisy, nonsmooth data.
+\newblock {\em ISRN Applied Mathematics}, 2011, 2011.
+
+\bibitem{taira:fastIBPM}
+T.~Colonius and K.~Taira.
+\newblock A fast immersed boundary method using a nullspace approach and
+  multi-domain far-field boundary conditions.
+\newblock {\em Computer Methods in Applied Mechanics and Engineering},
+  197:2131--2146, 2008.
+
+\bibitem{Donoho2006ieeetit}
+D.~L. Donoho.
+\newblock Compressed\hspace{-.00in} sensing.
+\newblock {\em IEEE\hspace{-.02in} Trans.\hspace{-.02in}
+  Information\hspace{-.02in} Theory}, 52(4):1289--1306, 2006.
+
+\bibitem{Gavish2014arxiv}
+M.~Gavish and D.~L. Donoho.
+\newblock The optimal hard threshold for singular values is $4/\sqrt{3}$.
+\newblock {\em ArXiv e-prints}, 2014.
+
+\bibitem{Hastie2009book}
+Trevor Hastie, Robert Tibshirani, Jerome Friedman, T~Hastie, J~Friedman, and
+  R~Tibshirani.
+\newblock {\em The elements of statistical learning}, volume~2.
+\newblock Springer, 2009.
+
+\bibitem{guckenheimer_holmes}
+P.~Holmes and J.~Guckenheimer.
+\newblock {\em Nonlinear\hspace{-.02in} oscillations,\hspace{-.02in}
+  dynamical\hspace{-.02in} systems,\hspace{-.02in} and\hspace{-.02in}
+  bifurcations\hspace{-.01in} of\hspace{-.01in} vector\hspace{-.01in} fields},
+  volume~42 of {\em Applied\hspace{-.01in} Mathematical\hspace{-.01in}
+  Sciences\hspace{-.02in}}.
+\newblock Springer-Verlag, \vspace{-.01in}Berlin, 1983.
+
+\bibitem{HLBR_turb}
+P.~J. Holmes, J.~L. Lumley, G.~Berkooz, and C.~W. Rowley.
+\newblock {\em Turbulence, coherent structures, dynamical systems and
+  symmetry}.
+\newblock Cambridge Monographs in Mechanics. Cambridge University Press,
+  Cambridge, England, 2nd edition, 2012.
+
+\bibitem{Jackson1987jfm}
+C.~P. Jackson.
+\newblock A finite-element study of the onset of vortex shedding in flow past
+  variously shaped bodies.
+\newblock {\em Journal of Fluid Mechanics}, 182:23--45, 1987.
+
+\bibitem{James2013book}
+Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+\newblock {\em An introduction to statistical learning}.
+\newblock Springer, 2013.
+
+\bibitem{Jordan2015science}
+MI~Jordan and TM~Mitchell.
+\newblock Machine learning: Trends, perspectives, and prospects.
+\newblock {\em Science}, 349(6245):255--260, 2015.
+
+\bibitem{Kevrekidis2003cms}
+I.~G. Kevrekidis, C.~W. Gear, J.~M. Hyman, P.~G. Kevrekidis, O.~Runborg, and
+  C.~Theodoropoulos.
+\newblock Equation-free, coarse-grained multiscale computation: Enabling
+  microscopic simulators to perform system-level analysis.
+\newblock {\em Communications in Mathematical Science}, 1(4):715--762, 2003.
+
+\bibitem{Khoury2014science}
+Muin~J Khoury and John~PA Ioannidis.
+\newblock Medicine. big data meets public health.
+\newblock {\em Science}, 346(6213):1054--1055, 2014.
+
+\bibitem{koza1992genetic}
+J.~R Koza.
+\newblock {\em Genetic programming: on the programming of computers by means of
+  natural selection}, volume~1.
+\newblock MIT press, 1992.
+
+\bibitem{ljung:book}
+L.~Ljung.
+\newblock {\em System Identification: Theory for the User}.
+\newblock Prentice Hall, 1999.
+
+\bibitem{Lorenz1963jas}
+Edward~N Lorenz.
+\newblock Deterministic nonperiodic flow.
+\newblock {\em J. Atmos. Sciences}, 20(2):130--141, 1963.
+
+\bibitem{mackey2014compressive}
+Alan Mackey, Hayden Schaeffer, and Stanley Osher.
+\newblock On the compressive spectral method.
+\newblock {\em Multiscale Modeling \&amp; Simulation}, 12(4):1800--1827, 2014.
+
+\bibitem{Majda2009pnas}
+Andrew~J Majda, Christian Franzke, and Daan Crommelin.
+\newblock Normal forms for reduced stochastic climate models.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  106(10):3649--3653, 2009.
+
+\bibitem{Majda2007bpnas}
+Andrew~J Majda and John Harlim.
+\newblock Information flow between subspaces of complex dynamical systems.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  104(23):9558--9563, 2007.
+
+\bibitem{Marsden1976book}
+Jerrold~E Marsden and Marjorie McCracken.
+\newblock {\em The Hopf bifurcation and its applications}, volume~19.
+\newblock Springer-Verlag, 1976.
+
+\bibitem{Marx2013nature}
+Vivien Marx.
+\newblock Biology: The big challenges of big data.
+\newblock {\em Nature}, 498(7453):255--260, 2013.
+
+\bibitem{Mezic2013arfm}
+Igor Mezic.
+\newblock Analysis of fluid flows via spectral properties of the koopman
+  operator.
+\newblock {\em Annual Review of Fluid Mechanics}, 45:357--378, 2013.
+
+\bibitem{Noack2003jfm}
+B.~R. Noack, K.~Afanasiev, M.~Morzynski, G.~Tadmor, and F.~Thiele.
+\newblock A hierarchy of low-dimensional models for the transient and
+  post-transient cylinder wake.
+\newblock {\em Journal of Fluid Mechanics}, 497:335--363, 2003.
+
+\bibitem{Olinger1988prl}
+DJ~Olinger and KR~Sreenivasan.
+\newblock Nonlinear dynamics of the wake of an oscillating cylinder.
+\newblock {\em Physical review letters}, 60(9):797, 1988.
+
+\bibitem{Ozolicnvs2013pnas}
+Vidvuds Ozoli{\c{n}}{\v{s}}, Rongjie Lai, Russel Caflisch, and Stanley Osher.
+\newblock Compressed modes for variational problems in mathematics and physics.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  110(46):18368--18373, 2013.
+
+\bibitem{Parezanovic2014JFTC}
+V.~Parezanovic, J.-C. Laurentie, T.~Duriez, C.~Fourment, J.~Delville, J.-P.\
+  Bonnet, L.~Cordier, B.~R. Noack, M.~Segond, M.~Abel, T.~Shaqarin, and S.~L.
+  Brunton.
+\newblock Mixing layer manipulation experiment -- from periodic forcing to
+  machine learning closed-loop control.
+\newblock {\em Journal Flow Turbulence and Combustion}, 94(1):155--173, 2015.
+
+\bibitem{Proctor2014epj}
+J.~L. Proctor, S.~L. Brunton, B.~W. Brunton, and J.~N. Kutz.
+\newblock Exploiting sparsity and equation-free architectures in complex
+  systems (invited review).
+\newblock {\em The European Physical Journal Special Topics},
+  223(13):2665--2684, 2014.
+
+\bibitem{Rowley2009jfm}
+C.~W. Rowley, I.\ Mezi\'c, S.\ Bagheri, P.\ Schlatter, and D.S. Henningson.
+\newblock Spectral analysis of nonlinear flows.
+\newblock {\em J.\ Fluid Mech.}, 645:115--127, 2009.
+
+\bibitem{Ruelle1971cmp}
+D.~Ruelle and F.~Takens.
+\newblock On the nature of turbulence.
+\newblock {\em Communications in Mathematical Physics}, 20:167--192, 1971.
+
+\bibitem{Schaeffer2013pnas}
+H.~Schaeffer, R.~Caflisch, C.~D. Hauck, and S.~Osher.
+\newblock Sparse dynamics for partial differential equations.
+\newblock {\em Proceedings of the National Academy of Sciences USA},
+  110(17):6634--6639, 2013.
+
+\bibitem{schmid:2010}
+P.~J. Schmid.
+\newblock Dynamic mode decomposition of numerical and experimental data.
+\newblock {\em Journal of Fluid Mechanics}, 656:5--28, August 2010.
+
+\bibitem{Schmidt2009science}
+Michael Schmidt and Hod Lipson.
+\newblock Distilling free-form natural laws from experimental data.
+\newblock {\em Science}, 324(5923):81--85, 2009.
+
+\bibitem{taira:07ibfs}
+K.~Taira and T.~Colonius.
+\newblock The immersed boundary method: a projection approach.
+\newblock {\em Journal of Computational Physics}, 225(2):2118--2137, 2007.
+
+\bibitem{Tibshirani1996lasso}
+R.~Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock {\em J. of the Royal Statistical Society B}, pages 267--288, 1996.
+
+\bibitem{Tropp:2007}
+J.~A. Tropp and A.~C. Gilbert.
+\newblock Signal recovery from random measurements via orthogonal matching
+  pursuit.
+\newblock {\em IEEE Transactions on Information Theory}, 53(12):4655--4666,
+  2007.
+
+\bibitem{Wright2009ieeetpami}
+J.~Wright, A.~Yang, A.~Ganesh, S.~Sastry, and Y.~Ma.
+\newblock Robust face recognition via sparse representation.
+\newblock {\em {IEEE} Trans. on Pattern Analysis and Machine Intelligence},
+  31(2):210--227, 2009.
+
+\bibitem{Zebib1987jem}
+Z.~Zebib.
+\newblock Stability of viscous flow past a circular cylinder.
+\newblock {\em Journal of Engineering Mathematics}, 21:155--165, 1987.
+
+\end{thebibliography}

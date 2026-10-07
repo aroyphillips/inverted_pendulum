@@ -32,7 +32,7 @@ The EDMD solution provides the finite-rank approximation of the controlled Koopm
 
 $$\boldsymbol{\phi}(\mathbf{x}) = \bigl[x,\; \dot{x},\; \theta,\; \dot{\theta},\; \sin\theta,\; \cos\theta - 1,\; x^2,\; \dot{x}^2,\; \theta^2,\; \dot{\theta}^2,\; x\theta,\; \dot{x}\dot{\theta},\; \theta\dot{\theta}\bigr]^\top$$
 
-The trigonometric terms $\sin\theta$ and $\cos\theta - 1$ are motivated by the analytic equations of motion; the quadratic terms capture second-order coupling. After lifting, all features are **standardised** to zero mean and unit variance across the dataset:
+$\theta$ is a periodic angular variable; $\sin\theta$ and $\cos\theta$ form the natural trigonometric basis for smooth periodic observables of an angular state. $\cos\theta - 1$ is the centered even term that equals zero at the target configuration $\theta = 0$ (upright) and grows for any angular displacement. The quadratic terms capture second-order coupling between state dimensions. After lifting, all features are **standardised** to zero mean and unit variance across the dataset:
 
 $$\tilde{\mathbf{z}} = \Sigma^{-1/2}(\boldsymbol{\phi}(\mathbf{x}) - \boldsymbol{\mu}_\phi)$$
 
@@ -66,9 +66,11 @@ $$\begin{bmatrix} U_p \\ Z_p \end{bmatrix} \mathbf{g} = \begin{bmatrix} \mathbf{
 
 with $\mathbf{z}_f = Z_f\mathbf{g}$, $\mathbf{u}_f = U_f\mathbf{g}$, and $\mathbf{z}_T$ the last $n_z$ entries of $\mathbf{z}_f$ (terminal lifted state). The block-diagonal matrices $\bar{Q} = I_N \otimes Q$ and $\bar{R} = I_N \otimes R$ expand the per-step cost across the horizon. $D \in \mathbb{R}^{(N-1) \times N}$ is the finite-difference matrix enforcing input-rate smoothness.
 
-The cost weight on lifted dimensions is:
+The cost weight on lifted dimensions uses **Bryson's rule** [Bryson & Ho, 1969] for the original four states — $Q_i = 1/\text{tol}_i^2$ from the per-state settling tolerances — and the mean of those weights for the lifted dimensions:
 
-$$Q = \mathrm{diag}\underbrace{[1.0,\; 0.2,\; 100.0,\; 10.0}_{\text{original states}},\; \underbrace{0.1,\; \ldots,\; 0.1}_{9 \text{ lifted dims}}], \qquad R = [0.05]$$
+$$Q = \mathrm{diag}\underbrace{\bigl[1/\text{tol}_x^2,\; 1/\text{tol}_{\dot x}^2,\; 1/\text{tol}_\theta^2,\; 1/\text{tol}_{\dot\theta}^2\bigr]}_{\text{original states}},\; \underbrace{\bar{q},\; \ldots,\; \bar{q}}_{9 \text{ lifted dims}}\Bigr], \qquad R = [1/u_{\max}^2]$$
+
+where $\bar{q}$ is the mean of the four Bryson weights. This choice requires no knowledge of the system equations; the heavy $\theta$ weight follows from the strict 2° tolerance relative to the 0.25 m cart tolerance.
 
 ### Regularisation parameters
 
@@ -101,5 +103,6 @@ When OSQP returns a non-optimal status, the PID controller (artifact `artifacts/
 - Coulson, J., Lygeros, J. & Dörfler, F. (2019). Data-Enabled Predictive Control: In the Shallows of the DeePC. *Proceedings of the European Control Conference (ECC)*, 307–312.
 - Koopman, B. O. (1931). Hamiltonian systems and transformation in Hilbert space. *Proceedings of the National Academy of Sciences*, 17(5), 315–318.
 - Williams, M. O., Kevrekidis, I. G. & Rowley, C. W. (2015). A Data-Driven Approximation of the Koopman Operator: Extending Dynamic Mode Decomposition. *Journal of Nonlinear Science*, 25(6), 1307–1346.
+- Bryson, A. E. & Ho, Y.-C. (1969). *Applied Optimal Control*. Blaisdell. (Bryson's rule for Q/R selection.)
 - Shi, H. & Li, P. (2023). A Koopman-based DeePC framework for data-driven predictive control of nonlinear systems. *arXiv:2302.14187*.
 - Stellato, B., Banjac, G., Goulart, P., Bemporad, A. & Boyd, S. (2020). OSQP: An operator splitting solver for quadratic programs. *Mathematical Programming Computation*, 12, 637–672.

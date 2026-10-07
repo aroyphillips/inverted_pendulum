@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Dict, Tuple
 
 import numpy as np
 
 from models.dataset_views import stratified_transition_sample
-from models.lqr_utils import finite_difference_linearization
+from models.lqr_utils import finite_difference_linearization, lqr_diagnostics
 
 
 @dataclass
@@ -113,7 +113,34 @@ class GPDynamicsModel:
         return x + delta
 
     def linearize(self, x_eq: np.ndarray | None = None, u_eq: np.ndarray | None = None) -> Tuple[np.ndarray, np.ndarray]:
+        a, b, _ = self.linearize_with_diagnostics(x_eq=x_eq, u_eq=u_eq)
+        return a, b
+
+    def linearize_with_diagnostics(
+        self,
+        x_eq: np.ndarray | None = None,
+        u_eq: np.ndarray | None = None,
+        eps_x: float = 1e-4,
+        eps_u: float = 1e-4,
+    ) -> Tuple[np.ndarray, np.ndarray, Dict]:
+        """Linearize the GP mean at equilibrium and return (A, B, diagnostics).
+
+        Diagnostics include controllability rank, A eigenvalues, norm(B), GP predictive
+        std at the equilibrium point, and whether the linearization looks reliable.
+        """
         x_eq = np.zeros(4, dtype=float) if x_eq is None else np.asarray(x_eq, dtype=float)
         u_eq = np.zeros(1, dtype=float) if u_eq is None else np.asarray(u_eq, dtype=float)
-        return finite_difference_linearization(self.predict_next, x_eq, u_eq)
+        a, b = finite_difference_linearization(self.predict_next, x_eq, u_eq, eps_x=eps_x, eps_u=eps_u)
 
+        ctrl_diag = lqr_diagnostics(a, b)
+
+        xu_eq = np.concatenate([x_eq, u_eq])
+        _, std_eq = self.predict_delta(xu_eq, return_std=True)
+
+        diag: Dict = {
+            **ctrl_diag,
+            "gp_std_at_eq": std_eq.tolist(),
+            "eps_x": eps_x,
+            "eps_u": eps_u,
+        }
+        return a, b, diag

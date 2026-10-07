@@ -113,6 +113,11 @@ Six method notebooks are available in `notebooks/`:
 
 Each notebook loads or trains its controller, evaluates the fixed dataset initial state, samples jittered black-box rollouts, and includes best/worst animation cells.
 
+Two additional notebooks provide a reproducible validation suite for the SINDy-LQR method:
+
+- `05a_sindy_lqr_stress_test.ipynb` — Evaluates the baseline SINDy-LQR controller on 100 randomly generated initial states (impulse force ∈ [0.5, 5] N, target angle ∈ [5, 90]°, seed=42).  Reports success rate, no-fall rate, settle time, and cost, bucketed by angle and force.  Artifacts are cached to `artifacts/validation/` for reuse by 05b.
+- `05b_sindy_lqr_crossval.ipynb` — Five-fold cross-validation on the 100 validation cases.  Each fold retrains SINDy-LQR on the original dataset plus the 80 train-fold rollout trajectories, then evaluates on the 20 held-out cases.  Compares per-fold and aggregate metrics against the baseline controller.  Requires 05a to have been run first.
+
 Training scripts:
 
 ```bash

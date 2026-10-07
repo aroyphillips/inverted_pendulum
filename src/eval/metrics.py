@@ -5,13 +5,18 @@ from typing import Dict
 import numpy as np
 
 
-DEFAULT_Q = np.diag([1.0, 0.2, 20.0, 1.0])
-DEFAULT_R = np.array([[0.05]])
-
 THETA_TOL = np.deg2rad(2.0)   # 2 degrees
 THETADOT_TOL = 0.1             # rad/s
 X_TOL = 0.25                   # m
 XDOT_TOL = 0.25                # m/s
+
+# Bryson's rule: Q_i = 1/tol_i^2, R = 1/u_max^2.
+# Encodes the task specification (settling tolerances and force limit) with no
+# ODE knowledge required. The heavy theta weight follows from the tight 2° tolerance
+# relative to the 0.25 m cart tolerance, not from physics equations.
+_FORCE_LIMIT = 5.0
+DEFAULT_Q = np.diag([1.0/X_TOL**2, 1.0/XDOT_TOL**2, 1.0/THETA_TOL**2, 1.0/THETADOT_TOL**2])
+DEFAULT_R = np.array([[1.0 / _FORCE_LIMIT**2]])
 
 
 def settling_time(t: np.ndarray, values: np.ndarray, threshold: float) -> float | None:

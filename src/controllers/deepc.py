@@ -10,6 +10,7 @@ import time
 import numpy as np
 
 from controllers.base import Controller
+from eval.metrics import THETA_TOL, THETADOT_TOL, X_TOL, XDOT_TOL
 from models.hankel import deepc_partitions, rank_report
 
 
@@ -25,9 +26,11 @@ class DeePCConfig:
     seed: int = 0
 
 
-# Default Q/R with stronger theta and theta_dot penalties.
-_DEFAULT_Q = np.diag([1.0, 0.2, 100.0, 10.0])
-_DEFAULT_R = np.array([[0.05]])
+# Bryson's rule: Q_i = 1/tol_i^2 where tol_i is the per-state settling tolerance.
+# R = 1/u_max^2. Derived from the task success specification; no ODE knowledge used.
+_FORCE_LIMIT_DEFAULT = 5.0
+_DEFAULT_Q = np.diag([1.0/X_TOL**2, 1.0/XDOT_TOL**2, 1.0/THETA_TOL**2, 1.0/THETADOT_TOL**2])
+_DEFAULT_R = np.array([[1.0 / _FORCE_LIMIT_DEFAULT**2]])
 
 
 class DeePCController(Controller):

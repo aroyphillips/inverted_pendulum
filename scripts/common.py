@@ -44,6 +44,7 @@ def artifact_path(name: str) -> Path:
         "koopman_deepc": PROJECT_ROOT / "artifacts/controllers/koopman_deepc.pkl",
         "gp_lqr": PROJECT_ROOT / "artifacts/controllers/gp_lqr.pkl",
         "sindy_lqr": PROJECT_ROOT / "artifacts/controllers/sindy_lqr.pkl",
+        "sindy_mpc": PROJECT_ROOT / "artifacts/controllers/sindy_mpc.pkl",
         "rl_sac": PROJECT_ROOT / "artifacts/rl/sac.zip",
     }
     return mapping[name]

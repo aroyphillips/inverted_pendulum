@@ -30,7 +30,7 @@ with $I_{\max} = 0.1$ rad·s. The final command is hard-saturated:
 
 $$u_{\text{applied}} = \mathrm{clip}(u,\; -u_{\max},\; u_{\max})$$
 
-This structure is equivalent to the static gain form $u = -\mathbf{K}\mathbf{x}$ from a discrete LQR (dropping the integrator), which motivates the LQR-informed warm-start used during tuning (see §Tuning, Stage 1).
+This structure is equivalent to the static gain form $u = -\mathbf{K}\mathbf{x}$ from a discrete LQR (dropping the integrator).
 
 The `TwoPhasePIDController` variant extends this by switching between separate *recovery* gains (when $|\theta| > \theta_{\text{switch}}$) and *regulation* gains (when near upright), allowing more aggressive initial corrections while preserving stability near equilibrium.
 
@@ -46,7 +46,7 @@ where $N$ is the number of test rollouts, $S(\mathbf{k})$ is the number of succe
 
 $$c_i(\mathbf{k}) = \int_0^{T} \bigl[\mathbf{x}(t)^\top Q\,\mathbf{x}(t) + u(t)^\top R\,u(t)\bigr]\,dt$$
 
-with $Q = \mathrm{diag}(1, 0.2, 20, 1)$ and $R = 0.05$. The penalty term $2000(N-S)$ strongly prioritises feasibility (all four settling tolerances satisfied) over raw cost minimisation.
+where $Q$ and $R$ are set by **Bryson's rule** [Bryson & Ho, 1969]: $Q_i = 1/\text{tol}_i^2$ using the per-state settling tolerances ($|x| \leq 0.25$ m, $|\dot{x}| \leq 0.25$ m/s, $|\theta| \leq 2°$, $|\dot{\theta}| \leq 0.1$ rad/s), and $R = 1/u_{\max}^2$. This encodes the relative tightness of the control specification with no knowledge of the system equations required. The same Q, R are used in the shared evaluation metric (`eval/metrics.py`). The penalty term $2000(N-S)$ strongly prioritises feasibility (all four settling tolerances satisfied) over raw cost minimisation.
 
 **Test states:** the canonical `initial_state` plus $N_{\text{jitter}} = 4$ perturbations drawn from $\mathcal{N}(\mathbf{0}, \mathrm{diag}(0.02, 0.05, 0.03, 0.10)^2)$.
 
@@ -54,11 +54,7 @@ with $Q = \mathrm{diag}(1, 0.2, 20, 1)$ and $R = 0.05$. The penalty term $2000(N
 
 ### Stage 1 — Seed Initialisation and Random Sampling (~100 evaluations)
 
-Five deterministic seeds are evaluated first. The primary seed is the LQR gain computed from the exact linearisation of the continuous-time pendulum equations at the upright equilibrium:
-
-$$K_{\text{LQR}} \approx [-3.2,\; -6.0,\; 64.2,\; 15.8]$$
-
-which corresponds to $\mathbf{k}^{(0)} = (k_{\theta p}=64.2, k_{\theta d}=15.8, k_{xp}=-3.2, k_{xd}=-6.0, k_i=0)$. The remaining budget for this stage is filled with uniform random samples within the search bounds (Table 1).
+Four empirically-discovered seed gain vectors are evaluated first, drawn from prior search runs. No seed is derived from the system's equations of motion. The remaining budget for this stage is filled with uniform random samples within the search bounds (Table 1).
 
 ### Stage 2 — Differential Evolution (~100 evaluations)
 
@@ -105,5 +101,6 @@ After tuning, 9 rollouts are executed (1 fixed + 8 jittered, $T = 20$ s, $\Delta
 ## References
 
 - Åström, K. J. & Hägglund, T. (1995). *PID Controllers: Theory, Design, and Tuning* (2nd ed.). ISA.
+- Bryson, A. E. & Ho, Y.-C. (1969). *Applied Optimal Control*. Blaisdell. (Bryson's rule for Q/R selection.)
 - Storn, R. & Price, K. (1997). Differential Evolution — A Simple and Efficient Heuristic for Global Optimization over Continuous Spaces. *Journal of Global Optimization*, 11(4), 341–359.
 - McKay, M. D., Beckman, R. J. & Conover, W. J. (1979). A Comparison of Three Methods for Selecting Values of Input Variables in the Analysis of Output from a Computer Code. *Technometrics*, 21(2), 239–245.

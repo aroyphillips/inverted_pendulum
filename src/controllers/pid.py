@@ -21,9 +21,6 @@ class PIDGains:
     k_i: float = 0.0
 
 
-# LQR-informed seed computed from exact linearization at force_limit≈5 N.
-# K = [[-3.207, -6.029, 64.231, 15.765]] from oracle_feasibility.py.
-_LQR_SEED = PIDGains(k_theta_p=64.2, k_theta_d=15.8, k_x_p=-3.2, k_x_d=-6.0, k_i=0.0)
 
 
 class PIDController(Controller):
@@ -233,7 +230,7 @@ def tune_pid(
 
     history: list[dict] = []
     best_score = float("inf")
-    best_gains: PIDGains = _LQR_SEED
+    best_gains: PIDGains = PIDGains()  # neutral default; overwritten after first evaluation
 
     def evaluate(gains: PIDGains, stage: str, trial_idx: int) -> float:
         nonlocal best_score, best_gains
@@ -255,8 +252,8 @@ def tune_pid(
     # Stage 1: fixed seeds + random candidates (~n_trials/3 evaluations)  #
     # ------------------------------------------------------------------ #
     n_stage1 = max(3, n_trials // 3)
+    # Empirically-discovered seed gains from prior search runs (not ODE-derived)
     seed_candidates = [
-        _LQR_SEED,
         PIDGains(80.0, 20.0, -4.0, -7.0, 0.0),   # aggressive recovery
         PIDGains(50.0, 12.0, -2.5, -4.5, 0.0),    # moderate
         PIDGains(48.0, 10.0, -3.8, -5.6, 0.0),    # legacy default

@@ -24,18 +24,18 @@ where $\Theta \in \mathbb{R}^{N \times p}$ is a library matrix of $p$ candidate 
 
 `sindy_library` constructs $p = 20$ candidate features of the augmented state $[\mathbf{x}^\top, u]^\top = [x, \dot{x}, \theta, \dot{\theta}, u]^\top$:
 
-| Index | Feature | Physical motivation |
+| Index | Feature | Basis justification |
 |---|---|---|
-| 0 | $1$ | constant / bias |
-| 1–4 | $x,\; \dot{x},\; \theta,\; \dot{\theta}$ | linear state terms |
-| 5 | $u$ | linear control term |
-| 6–10 | $x^2,\; \dot{x}^2,\; \theta^2,\; \dot{\theta}^2,\; u^2$ | quadratic terms |
-| 11–15 | $x\theta,\; \dot{x}\dot{\theta},\; \theta\dot{\theta},\; xu,\; \theta u$ | bilinear cross-terms |
-| 16–17 | $\sin\theta,\; \cos\theta - 1$ | pendulum restoring force, kinematic coupling |
-| 18 | $u\cos\theta$ | state-dependent control effectiveness |
-| 19 | $\dot{\theta}^2\sin\theta$ | centripetal coupling in pole equation |
+| 0 | $1$ | Constant / bias term |
+| 1–4 | $x,\; \dot{x},\; \theta,\; \dot{\theta}$ | Linear state terms |
+| 5 | $u$ | Linear control term |
+| 6–10 | $x^2,\; \dot{x}^2,\; \theta^2,\; \dot{\theta}^2,\; u^2$ | Degree-2 polynomial terms |
+| 11–15 | $x\theta,\; \dot{x}\dot{\theta},\; \theta\dot{\theta},\; xu,\; \theta u$ | Degree-2 cross-product terms |
+| 16–17 | $\sin\theta,\; \cos\theta - 1$ | $\theta$ is a periodic angular variable; $\sin$ and $\cos$ form the standard Fourier basis for smooth periodic functions. $\cos\theta - 1$ is the centered even term, equal to 0 at the target state $\theta = 0$ (upright) |
+| 18 | $u\cos\theta$ | Interaction between control input and angular orientation; captures how the effect of a horizontal force on a rotating body varies with its angular configuration |
+| 19 | $\dot{\theta}^2\sin\theta$ | Product of squared angular rate and angular sine; captures the interaction between rotation speed and angular displacement natural to rotating systems |
 
-The physically motivated trig terms ($\sin\theta$ and $\dot{\theta}^2\sin\theta$) appear in the exact continuous-time equations of motion for the pendulum, so SINDy can in principle exactly recover the governing physics if the data is sufficiently rich.
+The trig terms exploit the fact that $\theta$ is a periodic angular variable: $\sin\theta$ and $\cos\theta$ form the canonical Fourier basis for smooth observables of an angle. STLSQ will discard any term whose coefficient falls below the sparsity threshold, so inclusion in the library does not guarantee selection.
 
 ### Sequential Thresholded Least Squares (STLSQ)
 
@@ -66,7 +66,7 @@ theta_next   = 1.000*theta + 0.020*theta_dot + ...
 theta_dot_next = 0.290*sin(theta) + 0.040*theta_dot + 0.020*u + ...
 ```
 
-The notebook prints these equations immediately after fitting to verify physical plausibility (e.g., that $\sin\theta$ dominates the $\dot{\theta}$ equation and $u$ has the correct sign).
+The notebook prints these equations immediately after fitting to verify qualitative plausibility (e.g., that $\sin\theta$ appears in the angular velocity equation and $u$ has a non-zero coefficient in at least one state equation).
 
 ---
 
@@ -82,7 +82,7 @@ The LQR gain $K$ is computed from the **Discrete Algebraic Riccati Equation**:
 
 $$P = A^\top P A - A^\top P B (B^\top P B + R)^{-1} B^\top P A + Q$$
 
-with default weights $Q = \mathrm{diag}(1, 0.2, 100, 10)$, $R = 0.05$ (heavy penalty on $\theta$ and $\dot{\theta}$ to prioritise upright stabilisation over cart position). The control law is $u = -\alpha(K\mathbf{x})$.
+with weights set by **Bryson's rule** [Bryson & Ho, 1969]: $Q = \mathrm{diag}(1/\text{tol}_x^2, 1/\text{tol}_{\dot{x}}^2, 1/\text{tol}_\theta^2, 1/\text{tol}_{\dot\theta}^2)$, $R = 1/u_{\max}^2$. The heavy $\theta$ penalty ($Q_\theta \approx 820$) follows from the strict 2° settling tolerance relative to the 0.25 m cart tolerance — a task-specification consequence, not a physics equation. The control law is $u = -\alpha(K\mathbf{x})$.
 
 ---
 
@@ -130,9 +130,64 @@ This scalar check verifies that the identified model has the correct sign and ap
 
 ---
 
+---
+
+## Validation Notebooks
+
+Two additional notebooks extend the stress-test coverage of the SINDy-LQR pipeline.
+
+### 05a — Stress Test (100 Random Initial Conditions)
+
+**Notebook:** [notebooks/05a_sindy_lqr_stress_test.ipynb](../notebooks/05a_sindy_lqr_stress_test.ipynb)
+
+Evaluates the pre-trained baseline controller on 100 randomly generated initial states.
+
+**Protocol:**
+- Each case draws an impulse force uniformly from [0.5, 5] N and a target crossing angle uniformly from [5, 90] degrees.  The initial state is the system state at the moment the pendulum first crosses that angle under the impulse.
+- All 100 cases use the same seed (42) so the validation set is fully reproducible.
+- Cases where the impulse cannot reach the target angle within the simulation horizon are marked infeasible.
+- The baseline controller is loaded from `artifacts/controllers/sindy_lqr.pkl`; no retraining occurs.
+
+**Outputs saved to `artifacts/validation/`:**
+
+| File | Contents |
+|---|---|
+| `sindy_lqr_val_spec.npz` | Forces, angles, initial states, feasibility flags (seed=42) |
+| `sindy_lqr_stress_rollouts.npz` | States/inputs/time arrays for all 100 rollouts |
+| `sindy_lqr_stress_metrics.npz` | Per-case metrics (success, cost, settle time, …) |
+
+**Plots:** success rate bucketed by target angle and impulse force; scatter of every case coloured by outcome (success / failure / infeasible IC).
+
+---
+
+### 05b — Five-Fold Cross-Validation
+
+**Notebook:** [notebooks/05b_sindy_lqr_crossval.ipynb](../notebooks/05b_sindy_lqr_crossval.ipynb)
+
+Requires `05a_sindy_lqr_stress_test.ipynb` to have been run first.
+
+Retrains SINDy-LQR five times, each time on a different 80/20 partition of the validation cases augmented with the original training dataset, and evaluates each retrained controller on the 20 held-out cases.
+
+**Protocol:**
+- **Training data (per fold):** all transition pairs from the original 500-trajectory random-walk dataset plus the baseline-controller rollout trajectories for the 80 train-fold validation cases.
+- **Hyperparameters:** threshold, ridge, and alpha are fixed to the values selected during baseline tuning so the comparison measures generalization, not a different configuration.
+- **Fold splits:** cases are sorted by target angle and assigned to folds in round-robin order so each held-out fold covers the full angle range rather than clustering in an easy or hard region.
+- **Evaluation:** each held-out case is evaluated from its original impulse-derived initial state using the fold-specific retrained controller.
+
+**Outputs saved to `artifacts/validation/`:**
+
+| File | Contents |
+|---|---|
+| `sindy_lqr_fold_metrics.npz` | Per-case metrics annotated with fold index |
+
+**Result table:** per-fold success rate, median settle time, and median cost; aggregate CV metrics compared against the baseline controller on the same initial conditions.
+
+---
+
 ## References
 
 - Brunton, S. L., Proctor, J. L. & Kutz, J. N. (2016). Discovering governing equations from data by sparse identification of nonlinear dynamical systems. *Proceedings of the National Academy of Sciences*, 113(15), 3932–3937.
 - Brunton, S. L., Proctor, J. L. & Kutz, J. N. (2016). Sparse Identification of Nonlinear Dynamics with Control (SINDy-C). *IFAC-PapersOnLine*, 49(18), 710–715.
 - Kaiser, E., Kutz, J. N. & Brunton, S. L. (2018). Sparse identification of nonlinear dynamics for model predictive control in the low-data limit. *Proceedings of the Royal Society A*, 474(2219), 20180335.
 - Anderson, B. D. O. & Moore, J. B. (1990). *Optimal Control: Linear Quadratic Methods*. Prentice-Hall.
+- Bryson, A. E. & Ho, Y.-C. (1969). *Applied Optimal Control*. Blaisdell. (Bryson's rule for Q/R selection.)

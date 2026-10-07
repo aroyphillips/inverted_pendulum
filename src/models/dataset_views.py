@@ -2,11 +2,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import TYPE_CHECKING, Dict, List, Tuple
 
 import numpy as np
 
 from io_utils import load_dataset_npz
+
+if TYPE_CHECKING:
+    from eval.rollout import RolloutResult
 
 
 @dataclass
@@ -134,4 +137,69 @@ def stratified_transition_sample(
 
     rng.shuffle(chosen)
     return x[chosen], y[chosen]
+
+
+def data_driven_obs_scale(dataset: ControlDataset) -> np.ndarray:
+    """Per-state standard deviation across all training trajectories.
+
+    Returns a (4,) array of std-dev values, one per state dimension
+    [x, x_dot, theta, theta_dot]. Use as observation normalisation scales
+    to map each channel to approximately unit variance without requiring
+    prior knowledge of the system's physical operating range.
+    """
+    states_flat = dataset.states.reshape(-1, 4)
+    scale = np.std(states_flat, axis=0)
+    return np.maximum(scale, 1e-6)
+
+
+def rollout_pairs(result: "RolloutResult") -> Tuple[np.ndarray, np.ndarray]:
+    """Extract SINDy training pairs from a closed-loop rollout trajectory.
+
+    Returns:
+        ZU: (n_steps-1, 5) — [state, input] at each step k
+        X_next: (n_steps-1, 4) — state at step k+1
+    """
+    states = result.y.T        # (n_steps, 4)
+    inputs = result.u          # (n_steps,)
+    xk = states[:-1]           # (n_steps-1, 4)
+    uk = inputs[:-1, None]     # (n_steps-1, 1)
+    zu = np.concatenate([xk, uk], axis=1)
+    return zu, states[1:]
+
+
+def kfold_stratified_by_angle(
+    n: int,
+    angles_deg: np.ndarray,
+    k: int = 5,
+    seed: int = 0,
+) -> List[Tuple[np.ndarray, np.ndarray]]:
+    """K-fold (train_idx, val_idx) splits stratified by angle.
+
+    Cases are sorted by angle and assigned to folds in round-robin order so
+    each held-out fold spans the full angle range rather than clustering in one
+    region.  Both train_idx and val_idx are shuffled within each fold.
+
+    Args:
+        n: Number of cases (uses the first n entries of angles_deg).
+        angles_deg: Per-case target angles in degrees.
+        k: Number of folds.
+        seed: RNG seed for within-fold shuffling.
+
+    Returns:
+        List of k (train_idx, val_idx) pairs of integer arrays.
+    """
+    rng = np.random.default_rng(seed)
+    n = int(n)
+    angles = np.asarray(angles_deg[:n], dtype=float)
+    sorted_idx = np.argsort(angles)
+    fold_labels = np.empty(n, dtype=int)
+    fold_labels[sorted_idx] = np.arange(n) % k
+    splits = []
+    for fold in range(k):
+        train_idx = np.where(fold_labels != fold)[0]
+        val_idx = np.where(fold_labels == fold)[0]
+        rng.shuffle(train_idx)
+        rng.shuffle(val_idx)
+        splits.append((train_idx, val_idx))
+    return splits
 

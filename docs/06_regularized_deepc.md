@@ -76,9 +76,9 @@ The effect of $\lambda_g$ on robustness is studied in [Coulson et al., 2019; Ber
 
 ### Cost Matrices
 
-$$Q = \mathrm{diag}(1.0,\; 0.2,\; 100.0,\; 10.0), \qquad R = [0.05]$$
+$$Q = \mathrm{diag}\bigl(1/\text{tol}_x^2,\; 1/\text{tol}_{\dot x}^2,\; 1/\text{tol}_\theta^2,\; 1/\text{tol}_{\dot\theta}^2\bigr), \qquad R = [1/u_{\max}^2]$$
 
-The large weights on $\theta$ (100) and $\dot{\theta}$ (10) reflect the physical priority of keeping the pole upright. Cart position is weakly penalised.
+Weights are set by **Bryson's rule** [Bryson & Ho, 1969]: $Q_i = 1/\text{tol}_i^2$ from the per-state settling tolerances, $R = 1/u_{\max}^2$. The large weight on $\theta$ ($Q_\theta \approx 820$) follows directly from the strict 2° tolerance relative to the 0.25 m cart tolerance — a task-specification consequence requiring no knowledge of the system's equations of motion.
 
 ---
 
@@ -113,4 +113,5 @@ If OSQP returns a non-optimal status (`infeasible`, `unbounded`, or solver error
 - Berberich, J., Köhler, J., Müller, M. A. & Allgöwer, F. (2020). Data-Driven Model Predictive Control with Stability and Robustness Guarantees. *IEEE Transactions on Automatic Control*, 66(4), 1702–1717.
 - van Waarde, H. J., De Persis, C., Camlibel, M. K. & Tesi, P. (2020). Willems' Fundamental Lemma for State-Space Systems and Its Extension to Multiple Datasets. *IEEE Control Systems Letters*, 4(3), 602–607.
 - Diamond, S. & Boyd, S. (2016). CVXPY: A Python-Embedded Modeling Language for Convex Optimization. *Journal of Machine Learning Research*, 17(83), 1–5.
+- Bryson, A. E. & Ho, Y.-C. (1969). *Applied Optimal Control*. Blaisdell. (Bryson's rule for Q/R selection.)
 - Stellato, B., Banjac, G., Goulart, P., Bemporad, A. & Boyd, S. (2020). OSQP: An operator splitting solver for quadratic programs. *Mathematical Programming Computation*, 12, 637–672.

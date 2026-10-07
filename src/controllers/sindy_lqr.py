@@ -9,16 +9,17 @@ import time
 import numpy as np
 
 from controllers.base import Controller
-from eval.metrics import rollout_metrics
+from eval.metrics import THETA_TOL, THETADOT_TOL, X_TOL, XDOT_TOL, rollout_metrics
 from eval.rollout import rollout_controller
 from models.dataset_views import ControlDataset, flatten_supervised, split_by_trajectory
 from models.lqr_utils import discrete_lqr_gain
 from models.sindy import SINDyConfig, SINDyDynamicsModel
 
 
-# Default Q to use when computing LQR from SINDy model (heavy theta weight).
-_DEFAULT_Q = np.diag([1.0, 0.2, 100.0, 10.0])
-_DEFAULT_R = np.array([[0.05]])
+# Bryson's rule: Q_i = 1/tol_i^2 from task settling tolerances; R = 1/u_max^2.
+# No ODE knowledge required; the heavy theta weight follows from the tight 2° tolerance.
+_DEFAULT_Q = np.diag([1.0/X_TOL**2, 1.0/XDOT_TOL**2, 1.0/THETA_TOL**2, 1.0/THETADOT_TOL**2])
+_DEFAULT_R = np.array([[1.0 / 5.0**2]])
 
 # Grid of (threshold, ridge) pairs to try during tuning.
 _DEFAULT_THRESHOLD_RIDGE_GRID: List[Tuple[float, float]] = [

@@ -17,7 +17,7 @@ class RLController(Controller):
     def __init__(
         self,
         model,
-        observation_scale: tuple[float, float, float, float] = (1.0, 2.0, 1.0, 5.0),
+        observation_scale: tuple[float, float, float, float] = (1.0, 1.0, 1.0, 1.0),
         force_limit: float = 5.0,
         name: str = "rl_sac",
     ) -> None:
@@ -40,7 +40,7 @@ class RLController(Controller):
     def load_sac(
         cls,
         path: Path,
-        observation_scale: tuple[float, float, float, float] = (1.0, 2.0, 1.0, 5.0),
+        observation_scale: tuple[float, float, float, float] = (1.0, 1.0, 1.0, 1.0),
         force_limit: float = 5.0,
     ) -> "RLController":
         try:

@@ -9,6 +9,7 @@ import numpy as np
 
 from controllers.base import Controller
 from controllers.deepc import DeePCConfig, DeePCController
+from eval.metrics import THETA_TOL, THETADOT_TOL, X_TOL, XDOT_TOL
 from models.koopman import KoopmanLift, edmdc_diagnostics
 
 
@@ -20,12 +21,15 @@ class KoopmanDeePCController(DeePCController):
         fallback: Optional[Controller] = None,
         feature_set: str = "standard",
     ) -> None:
-        # Stronger theta/theta_dot weights matching the improved DeePC Q.
-        # Lifted dims 4+ get a small regularisation weight.
+        # Q: Bryson's rule on original 4 states, small regularisation on lifted dims.
+        # Original-state weights: Q_i = 1/tol_i^2 from task settling tolerances.
+        # Lifted dims 4+ get a uniform weight equal to the mean of the original weights.
         n_extra = 4 if feature_set == "rich" else 0
         n_lifted = 13 + n_extra
-        q = np.diag([1.0, 0.2, 100.0, 10.0] + [0.1] * (n_lifted - 4))
-        super().__init__(config=config, force_limit=force_limit, fallback=fallback, q=q, r=np.array([[0.05]]))
+        _bryson_diag = [1.0/X_TOL**2, 1.0/XDOT_TOL**2, 1.0/THETA_TOL**2, 1.0/THETADOT_TOL**2]
+        _lifted_weight = float(np.mean(_bryson_diag))
+        q = np.diag(_bryson_diag + [_lifted_weight] * (n_lifted - 4))
+        super().__init__(config=config, force_limit=force_limit, fallback=fallback, q=q, r=np.array([[1.0/force_limit**2]]))
         self.name = "koopman_deepc"
         self.lift = KoopmanLift(standardize=True, feature_set=feature_set)
 
